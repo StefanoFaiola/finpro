@@ -11,7 +11,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 /* sidebar */
 #sidebar{width:240px;flex-shrink:0;background:#0e1520;height:100vh;position:sticky;top:0;overflow-y:auto;}
-.sb-head{padding:22px 18px 16px;border-bottom:0.5px solid rgba(255,255,255,0.07);}
+.sb-head{padding:16px 18px;border-bottom:0.5px solid rgba(255,255,255,0.07);}
+.sb-back{display:flex;align-items:center;gap:7px;color:#2d4255;font-size:11px;text-decoration:none;margin-bottom:12px;transition:color .15s;}
+.sb-back:hover{color:#4a6b7a;}
+.sb-back svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.5;}
 .sb-title{font-family:Georgia,serif;font-size:17px;color:#fff;letter-spacing:-0.2px;}
 .sb-sub{font-size:10px;color:#2d4255;text-transform:uppercase;letter-spacing:0.1em;margin-top:2px;}
 .cat-lbl{font-size:9px;font-weight:700;color:#233545;text-transform:uppercase;letter-spacing:0.12em;padding:14px 18px 4px;}
@@ -67,6 +70,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <nav id="sidebar">
   <div class="sb-head">
+    <a href="index.html" class="sb-back">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to hub
+    </a>
     <div class="sb-title">Options strategies</div>
     <div class="sb-sub">Interactive reference</div>
   </div>
@@ -608,7 +615,7 @@ function controls(...rows){
     <div class="sl-row">
       <label>${lbl}</label>
       <input type="range" min="${min}" max="${max}" value="${val}" step="1" data-id="${id}">
-      <span class="sl-val" data-out="${id}">${lbl.includes('vol')||lbl.includes('Impl')?val+'%':'$'+val}</span>
+      <span class="sl-val" data-out="${id}">${lbl.includes('vol')||lbl.includes('Impl')?val+'%':lbl.toLowerCase().includes('expiry')||lbl.toLowerCase().includes('month')?val+' mo':'$'+val}</span>
     </div>`).join('')+'</div>';
 }
 function metricsHTML(){
@@ -628,7 +635,7 @@ function bind(el,fn){
   el.querySelectorAll('input[type=range]').forEach(inp=>{
     inp.addEventListener('input',()=>{
       const out=el.querySelector(`[data-out="${inp.dataset.id}"]`);
-      if(out){const v=inp.value;out.textContent=inp.dataset.id==='v'||inp.dataset.id.startsWith('v')?v+'%':'$'+v;}
+      if(out){const v=inp.value;const id=inp.dataset.id;out.textContent=id==='v'||id.startsWith('v')?v+'%':id==='t'||id==='t1'||id==='t2'?v+' mo':'$'+v;}
       fn();
     });
   });
