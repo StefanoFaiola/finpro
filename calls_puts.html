@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calls & Puts — Options Fundamentals</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f2ed;color:#1a1918;min-height:100vh;}
+
+header{background:#0e1520;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;}
+.hd-back{display:flex;align-items:center;gap:10px;color:#4a6b7a;font-size:13px;text-decoration:none;transition:color .15s;}
+.hd-back:hover{color:#9eb8c4;}
+.hd-back svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;}
+.hd-title{font-family:Georgia,serif;font-size:17px;color:#fff;letter-spacing:-0.2px;}
+.hd-tag{font-size:10px;color:#2d4255;text-transform:uppercase;letter-spacing:0.1em;}
+
+.hero{background:#0e1520;padding:40px 40px 60px;border-bottom:0.5px solid rgba(255,255,255,0.05);}
+.hero-inner{max-width:860px;margin:0 auto;}
+.hero h1{font-family:Georgia,serif;font-size:36px;font-weight:normal;color:#fff;margin-bottom:10px;line-height:1.2;}
+.hero p{font-size:15px;color:#5a7a8a;line-height:1.8;max-width:600px;}
+
+.tabs-outer{background:#f4f2ed;border-bottom:0.5px solid rgba(0,0,0,0.1);position:sticky;top:0;z-index:10;}
+.tabs-inner{max-width:860px;margin:0 auto;display:flex;gap:0;}
+.tab-btn{padding:14px 24px;font-size:14px;border:none;background:transparent;cursor:pointer;color:#888;border-bottom:2px solid transparent;transition:all .15s;font-family:inherit;}
+.tab-btn:hover{color:#333;}
+.tab-btn.active{color:#0e1520;border-bottom-color:#1D9E75;font-weight:500;}
+
+.page{max-width:860px;margin:0 auto;padding:36px 40px;}
+
+.section{margin-bottom:36px;}
+.sec-title{font-family:Georgia,serif;font-size:22px;font-weight:normal;color:#0a1218;margin-bottom:6px;}
+.sec-body{font-size:14px;color:#3d3c3a;line-height:1.85;margin-bottom:18px;}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.card{background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:12px;padding:20px;}
+.card-title{font-size:13px;font-weight:600;margin-bottom:4px;}
+.card-sub{font-size:12px;color:#888;line-height:1.5;margin-bottom:14px;}
+
+.badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;padding:3px 9px;border-radius:20px;margin-bottom:8px;}
+.b-buy{background:#e8f4fd;color:#0c3a5c;}
+.b-sell{background:#fdecea;color:#5c1a0f;}
+.b-call{background:#eef9f4;color:#0a3d28;}
+.b-put{background:#f9f0fd;color:#3a0a5c;}
+
+.sl-row{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,0.05);}
+.sl-row label{font-size:12px;color:#666;flex:1;}
+.sl-row input[type=range]{width:100px;accent-color:#1D9E75;}
+.sl-val{font-size:12px;font-weight:600;color:#1a1918;min-width:44px;text-align:right;}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 10px;}
+.sc{background:#f6f4f0;border-radius:7px;padding:9px 11px;}
+.sc .sl{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:2px;}
+.sc .sv{font-size:15px;font-weight:500;}
+
+.chart-wrap{position:relative;width:100%;height:220px;}
+
+.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0;}
+.sc-card{background:#f6f4f0;border-radius:8px;padding:12px;text-align:center;cursor:pointer;border:1.5px solid transparent;transition:border-color .15s;}
+.sc-card:hover{border-color:rgba(0,0,0,0.12);}
+.sc-card.active{border-color:#1D9E75;background:#f0faf6;}
+.sc-card .scp{font-size:13px;font-weight:500;margin-bottom:2px;}
+.sc-card .scd{font-size:11px;color:#888;}
+
+.outcome{background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:14px;margin:12px 0;}
+.o-row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,0.05);}
+.o-row:last-child{border-bottom:none;}
+.ok{color:#888;}
+.ov{font-weight:500;}
+.pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;margin-top:6px;}
+.pill-win{background:#eaf3de;color:#27500a;}
+.pill-lose{background:#fcebeb;color:#791f1f;}
+.pill-flat{background:#faeeda;color:#633806;}
+
+.callout{background:#f0f9f5;border-left:3px solid #1D9E75;border-radius:0 7px 7px 0;padding:11px 15px;font-size:13px;color:#14352a;line-height:1.65;margin-top:14px;}
+.warn{background:#fff9f0;border-left:3px solid #EF9F27;border-radius:0 7px 7px 0;padding:11px 15px;font-size:13px;color:#3a2000;line-height:1.65;margin-top:10px;}
+
+.compare-table{width:100%;border-collapse:collapse;font-size:13px;margin:16px 0;}
+.compare-table th{background:#f6f4f0;padding:10px 12px;text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:#666;}
+.compare-table td{padding:9px 12px;border-bottom:0.5px solid rgba(0,0,0,0.06);}
+.compare-table tr:last-child td{border-bottom:none;}
+.compare-table td:first-child{font-weight:500;color:#1a1918;}
+.compare-table .green{color:#0F6E56;}
+.compare-table .red{color:#A32D2D;}
+
+.legend{display:flex;gap:14px;margin-top:8px;font-size:11px;color:#888;flex-wrap:wrap;}
+.legend span{display:flex;align-items:center;gap:4px;}
+.legend i{width:14px;height:2px;display:inline-block;border-radius:1px;}
+
+.pov-toggle{display:flex;gap:0;margin-bottom:18px;border:0.5px solid rgba(0,0,0,0.12);border-radius:8px;overflow:hidden;width:fit-content;}
+.pov-btn{padding:8px 20px;font-size:13px;border:none;background:transparent;cursor:pointer;color:#666;transition:all .15s;font-family:inherit;}
+.pov-btn.active{background:#0e1520;color:#fff;}
+
+.rights-table{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(0,0,0,0.07);border-radius:10px;overflow:hidden;margin:16px 0;}
+.rt-cell{background:#fff;padding:16px 18px;}
+.rt-cell.header{background:#f6f4f0;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#888;}
+.rt-cell.call-header{background:#e8f4fd;color:#0c3a5c;}
+.rt-cell.put-header{background:#f3eeff;color:#3a0a5c;}
+.rt-title{font-weight:600;font-size:13px;margin-bottom:4px;}
+.rt-body{font-size:12px;color:#555;line-height:1.6;}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="hd-back">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Back to hub
+  </a>
+  <div style="text-align:center;">
+    <div class="hd-title">Calls & Puts</div>
+    <div class="hd-tag">Options fundamentals</div>
+  </div>
+  <div style="width:100px;"></div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>The four positions<br>every trader must know</h1>
+    <p>Every option trade is one of four things: buying a call, selling a call, buying a put, or selling a put. Understand these four shapes and every strategy in the world is just a combination of them.</p>
+  </div>
+</div>
+
+<div class="tabs-outer">
+  <div class="tabs-inner">
+    <button class="tab-btn active" onclick="showTab('overview')">Overview</button>
+    <button class="tab-btn" onclick="showTab('long_call')">Long call</button>
+    <button class="tab-btn" onclick="showTab('short_call')">Short call</button>
+    <button class="tab-btn" onclick="showTab('long_put')">Long put</button>
+    <button class="tab-btn" onclick="showTab('short_put')">Short put</button>
+    <button class="tab-btn" onclick="showTab('compare')">Compare all</button>
+  </div>
+</div>
+
+<div id="tab-overview" class="page">
+  <div class="section">
+    <h2 class="sec-title">Rights vs obligations</h2>
+    <p class="sec-body">Options give rights to buyers and impose obligations on sellers. The asymmetry is the whole point — the buyer pays a premium for protection from downside, while the seller collects that premium in exchange for bearing the risk.</p>
+
+    <div class="rights-table">
+      <div class="rt-cell header"></div>
+      <div class="rt-cell call-header"><div class="rt-title">Call option</div><div class="rt-body">Right/obligation to buy</div></div>
+      <div class="rt-cell put-header"><div class="rt-title">Put option</div><div class="rt-body">Right/obligation to sell</div></div>
+      <div class="rt-cell" style="background:#f0f9f5;"><div class="rt-title" style="color:#0a3d28;">Buyer (long)</div><div class="rt-body">Pays premium · Holds the right · Limited loss</div></div>
+      <div class="rt-cell"><div class="rt-title">Long call</div><div class="rt-body">Right to <strong>buy</strong> at strike.<br>Profit if stock rises above K + premium.</div></div>
+      <div class="rt-cell"><div class="rt-title">Long put</div><div class="rt-body">Right to <strong>sell</strong> at strike.<br>Profit if stock falls below K − premium.</div></div>
+      <div class="rt-cell" style="background:#fff9f0;"><div class="rt-title" style="color:#4a2000;">Seller (short)</div><div class="rt-body">Collects premium · Has obligation · Unlimited risk</div></div>
+      <div class="rt-cell"><div class="rt-title">Short call</div><div class="rt-body">Obligated to <strong>sell</strong> at strike.<br>Profit if stock stays below K + premium.</div></div>
+      <div class="rt-cell"><div class="rt-title">Short put</div><div class="rt-body">Obligated to <strong>buy</strong> at strike.<br>Profit if stock stays above K − premium.</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="sec-title">The four payoff shapes</h2>
+    <p class="sec-body">Drag the sliders to see how all four positions respond to the same stock price. Notice how buyer positions (green) and seller positions (red) are exact mirror images of each other.</p>
+
+    <div style="background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:12px;padding:20px;">
+      <div class="sl-row"><label>Strike price (K)</label><input type="range" id="ov-K" min="70" max="140" value="100" step="1" oninput="updateOverview()"><span class="sl-val" id="ov-Kv">$100</span></div>
+      <div class="sl-row"><label>Premium</label><input type="range" id="ov-P" min="1" max="20" value="7" step="1" oninput="updateOverview()"><span class="sl-val" id="ov-Pv">$7</span></div>
+      <div style="position:relative;width:100%;height:240px;margin-top:14px;"><canvas id="ov-ch"></canvas></div>
+      <div class="legend">
+        <span><i style="background:#1D9E75;"></i>Long call</span>
+        <span><i style="background:#185FA5;"></i>Long put</span>
+        <span><i style="background:#E24B4A;"></i>Short call</span>
+        <span><i style="background:#EF9F27;"></i>Short put</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">The buyer's loss is always capped at the premium paid. The seller's maximum profit is always the premium collected. These limits are what makes options so versatile — you can define your exact worst-case scenario before entering any trade.</div>
+</div>
+
+<div id="tab-long_call" class="page" style="display:none;">
+  <div class="section">
+    <div><span class="badge b-buy">Buy</span> <span class="badge b-call">Call</span></div>
+    <h2 class="sec-title">Long call</h2>
+    <p class="sec-body">You pay a premium for the right to buy 100 shares at the strike price on or before expiry. If the stock rises above the strike by more than the premium, you profit. If it doesn't, you lose only the premium — nothing more.</p>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Who buys calls?</div>
+        <div class="card-sub">Bullish traders who want leveraged upside with limited downside. The premium is the maximum you can lose regardless of how far the stock falls.</div>
+        <div class="callout" style="margin-top:0;">Best when: you expect a significant rally and want to control more shares with less capital than buying the stock outright.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">The math</div>
+        <div class="card-sub">
+          <strong>Profit</strong> = Stock price − Strike − Premium (if exercised)<br><br>
+          <strong>Max loss</strong> = Premium paid<br>
+          <strong>Breakeven</strong> = Strike + Premium<br>
+          <strong>Max gain</strong> = Unlimited
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:12px;padding:20px;margin-bottom:16px;">
+      <div class="sl-row"><label>Current stock price (S)</label><input type="range" id="lc-S" min="60" max="160" value="100" step="1" oninput="updateLC()"><span class="sl-val" id="lc-Sv">$100</span></div>
+      <div class="sl-row"><label>Strike price (K)</label><input type="range" id="lc-K" min="60" max="160" value="100" step="1" oninput="updateLC()"><span class="sl-val" id="lc-Kv">$100</span></div>
+      <div class="sl-row"><label>Premium paid</label><input type="range" id="lc-P" min="1" max="25" value="7" step="1" oninput="updateLC()"><span class="sl-val" id="lc-Pv">$7</span></div>
+      <div class="sl-row"><label>Stock at expiry</label><input type="range" id="lc-E" min="60" max="160" value="115" step="1" oninput="updateLC()"><span class="sl-val" id="lc-Ev">$115</span></div>
+      <div class="stats">
+        <div class="sc"><div class="sl">Your P&L</div><div class="sv" id="lc-pnl">—</div></div>
+        <div class="sc"><div class="sl">Breakeven</div><div class="sv" id="lc-be">—</div></div>
+        <div class="sc"><div class="sl">Max loss</div><div class="sv" style="color:#A32D2D" id="lc-ml">—</div></div>
+      </div>
+      <div class="chart-wrap"><canvas id="lc-ch"></canvas></div>
+      <div class="legend"><span><i style="background:#1D9E75;"></i>P&L at expiry</span></div>
+    </div>
+
+    <h3 style="font-size:15px;font-weight:500;margin-bottom:12px;">Three scenarios</h3>
+    <div class="scenario-grid">
+      <div class="sc-card active" id="lcs-0" onclick="lcScenario(0)"><div class="scp">Stock rallies</div><div class="scd">Goes above breakeven</div></div>
+      <div class="sc-card" id="lcs-1" onclick="lcScenario(1)"><div class="scp">Stock flat</div><div class="scd">Expires near strike</div></div>
+      <div class="sc-card" id="lcs-2" onclick="lcScenario(2)"><div class="scp">Stock crashes</div><div class="scd">Deep out of the money</div></div>
+    </div>
+    <div class="outcome" id="lc-outcome"></div>
+    <div class="warn">Watch out for theta decay — time value erodes daily. A long call that's right about direction but too slow will still lose money. Give yourself enough time.</div>
+  </div>
+</div>
+
+<div id="tab-short_call" class="page" style="display:none;">
+  <div class="section">
+    <div><span class="badge b-sell">Sell</span> <span class="badge b-call">Call</span></div>
+    <h2 class="sec-title">Short call</h2>
+    <p class="sec-body">You collect premium immediately. In return, you are obligated to sell shares at the strike if the buyer exercises. Maximum profit is the premium collected. If the stock rises sharply, losses are theoretically unlimited.</p>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Who sells calls?</div>
+        <div class="card-sub">Income-focused traders who believe the stock will stay below the strike. Often done "covered" — against shares already owned — to reduce risk.</div>
+        <div class="warn" style="margin-top:0;">Naked short calls are extremely high risk. One unexpected rally can erase months of premium income.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">The math</div>
+        <div class="card-sub">
+          <strong>Profit</strong> = Premium − max(0, Stock − Strike)<br><br>
+          <strong>Max profit</strong> = Premium collected<br>
+          <strong>Breakeven</strong> = Strike + Premium<br>
+          <strong>Max loss</strong> = Unlimited
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:12px;padding:20px;margin-bottom:16px;">
+      <div class="pov-toggle">
+        <button class="pov-btn active" id="sc-pov-sell" onclick="scSetPov('sell')">Seller view</button>
+        <button class="pov-btn" id="sc-pov-buy" onclick="scSetPov('buy')">What buyer sees</button>
+      </div>
+      <div class="sl-row"><label>Current stock price (S)</label><input type="range" id="sc-S" min="60" max="160" value="100" step="1" oninput="updateSC()"><span class="sl-val" id="sc-Sv">$100</span></div>
+      <div class="sl-row"><label>Strike price (K)</label><input type="range" id="sc-K" min="60" max="160" value="108" step="1" oninput="updateSC()"><span class="sl-val" id="sc-Kv">$108</span></div>
+      <div class="sl-row"><label>Premium</label><input type="range" id="sc-P" min="1" max="25" value="6" step="1" oninput="updateSC()"><span class="sl-val" id="sc-Pv">$6</span></div>
+      <div class="sl-row"><label>Stock at expiry</label><input type="range" id="sc-E" min="60" max="160" value="102" step="1" oninput="updateSC()"><span class="sl-val" id="sc-Ev">$102</span></div>
+      <div class="stats">
+        <div class="sc"><div class="sl">Your P&L</div><div class="sv" id="sc-pnl">—</div></div>
+        <div class="sc"><div class="sl">Breakeven</div><div class="sv" id="sc-be">—</div></div>
+        <div class="sc"><div class="sl">Max profit</div><div class="sv" style="color:#0F6E56" id="sc-mp">—</div></div>
+      </div>
+      <div class="chart-wrap"><canvas id="sc-ch"></canvas></div>
+      <div class="legend" id="sc-legend"></div>
+    </div>
+
+    <h3 style="font-size:15px;font-weight:500;margin-bottom:12px;">Three scenarios</h3>
+    <div class="scenario-grid">
+      <div class="sc-card active" id="scs-0" onclick="scScenario(0)"><div class="scp">Stock stays below K</div><div class="scd">Option expires worthless</div></div>
+      <div class="sc-card" id="scs-1" onclick="scScenario(1)"><div class="scp">Stock at breakeven</div><div class="scd">Zero net gain/loss</div></div>
+      <div class="sc-card" id="scs-2" onclick="scScenario(2)"><div class="scp">Stock surges above K</div><div class="scd">Large loss for seller</div></div>
+    </div>
+    <div class="outcome" id="sc-outcome"></div>
+  </div>
+</div>
+
+<div id="tab-long_put" class="page" style="display:none;">
+  <div class="section">
+    <div><span class="badge b-buy">Buy</span> <span class="badge b-put">Put</span></div>
+    <h2 class="sec-title">Long put</h2>
+    <p class="sec-body">You pay a premium for the right to sell shares at the strike price. If the stock falls below the strike by more than the premium, you profit. Maximum loss is the premium. Maximum profit is the strike minus premium (stock can only reach zero).</p>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Who buys puts?</div>
+        <div class="card-sub">Bearish traders and investors hedging a stock portfolio. A put on your stock position works exactly like insurance — you pay a premium to cap your downside.</div>
+        <div class="callout" style="margin-top:0;">Best when: you expect a significant decline OR want to protect a stock position from a crash without selling the shares.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">The math</div>
+        <div class="card-sub">
+          <strong>Profit</strong> = Strike − Stock price − Premium (if exercised)<br><br>
+          <strong>Max loss</strong> = Premium paid<br>
+          <strong>Breakeven</strong> = Strike − Premium<br>
+          <strong>Max gain</strong> = Strike − Premium (stock → 0)
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:12px;padding:20px;margin-bottom:16px;">
+      <div class="sl-row"><label>Current stock price (S)</label><input type="range" id="lp-S" min="60" max="160" value="100" step="1" oninput="updateLP()"><span class="sl-val" id="lp-Sv">$100</span></div>
+      <div class="sl-row"><label>Strike price (K)</label><input type="range" id="lp-K" min="60" max="160" value="100" step="1" oninput="updateLP()"><span class="sl-val" id="lp-Kv">$100</span></div>
+      <div class="sl-row"><label>Premium paid</label><input type="range" id="lp-P" min="1" max="25" value="7" step="1" oninput="updateLP()"><span class="sl-val" id="lp-Pv">$7</span></div>
+      <div class="sl-row"><label>Stock at expiry</label><input type="range" id="lp-E" min="60" max="160" value="82" step="1" oninput="updateLP()"><span class="sl-val" id="lp-Ev">$82</span></div>
+      <div class="stats">
+        <div class="sc"><div class="sl">Your P&L</div><div class="sv" id="lp-pnl">—</div></div>
+        <div class="sc"><div class="sl">Breakeven</div><div class="sv" id="lp-be">—</div></div>
+        <div class="sc"><div class="sl">Max loss</div><div class="sv" style="color:#A32D2D" id="lp-ml">—</div></div>
+      </div>
+      <div class="chart-wrap"><canvas id="lp-ch"></canvas></div>
+      <div class="legend"><span><i style="background:#185FA5;"></i>P&L at expiry</span></div>
+    </div>
+
+    <h3 style="font-size:15px;font-weight:500;margin-bottom:12px;">Three scenarios</h3>
+    <div class="scenario-grid">
+      <div class="sc-card active" id="lps-0" onclick="lpScenario(0)"><div class="scp">Stock crashes</div><div class="scd">Deep in the money</div></div>
+      <div class="sc-card" id="lps-1" onclick="lpScenario(1)"><div class="scp">Stock at breakeven</div><div class="scd">Zero net gain/loss</div></div>
+      <div class="sc-card" id="lps-2" onclick="lpScenario(2)"><div class="scp">Stock rallies</div><div class="scd">Option expires worthless</div></div>
+    </div>
+    <div class="outcome" id="lp-outcome"></div>
+    <div class="callout" style="margin-top:12px;">Unlike short-selling a stock, buying a put limits your risk to the premium paid — even if the stock goes to $1,000. That defined risk makes long puts safer than being short the shares directly.</div>
+  </div>
+</div>
+
+<div id="tab-short_put" class="page" style="display:none;">
+  <div class="section">
+    <div><span class="badge b-sell">Sell</span> <span class="badge b-put">Put</span></div>
+    <h2 class="sec-title">Short put</h2>
+    <p class="sec-body">You collect premium immediately. In return, you are obligated to buy shares at the strike if the buyer exercises. Maximum profit is the premium. If the stock falls sharply, you must buy at the strike — potentially far above market price.</p>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Who sells puts?</div>
+        <div class="card-sub">Income-seeking traders who are bullish or neutral, and happy to own the stock at the strike price. "Cash-secured" means holding the cash to buy the stock if assigned.</div>
+        <div class="callout" style="margin-top:0;">Classic use: "I'd buy AAPL at $150 anyway — so I'll sell a $150 put and get paid to wait for that price."</div>
+      </div>
+      <div class="card">
+        <div class="card-title">The math</div>
+        <div class="card-sub">
+          <strong>Profit</strong> = Premium − max(0, Strike − Stock)<br><br>
+          <strong>Max profit</strong> = Premium collected<br>
+          <strong>Breakeven</strong> = Strike − Premium<br>
+          <strong>Max loss</strong> = Strike − Premium (stock → 0)
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:12px;padding:20px;margin-bottom:16px;">
+      <div class="sl-row"><label>Current stock price (S)</label><input type="range" id="sp-S" min="60" max="160" value="100" step="1" oninput="updateSP()"><span class="sl-val" id="sp-Sv">$100</span></div>
+      <div class="sl-row"><label>Strike price (K)</label><input type="range" id="sp-K" min="60" max="160" value="93" step="1" oninput="updateSP()"><span class="sl-val" id="sp-Kv">$93</span></div>
+      <div class="sl-row"><label>Premium collected</label><input type="range" id="sp-P" min="1" max="25" value="5" step="1" oninput="updateSP()"><span class="sl-val" id="sp-Pv">$5</span></div>
+      <div class="sl-row"><label>Stock at expiry</label><input type="range" id="sp-E" min="60" max="160" value="97" step="1" oninput="updateSP()"><span class="sl-val" id="sp-Ev">$97</span></div>
+      <div class="stats">
+        <div class="sc"><div class="sl">Your P&L</div><div class="sv" id="sp-pnl">—</div></div>
+        <div class="sc"><div class="sl">Breakeven</div><div class="sv" id="sp-be">—</div></div>
+        <div class="sc"><div class="sl">Max profit</div><div class="sv" style="color:#0F6E56" id="sp-mp">—</div></div>
+      </div>
+      <div class="chart-wrap"><canvas id="sp-ch"></canvas></div>
+      <div class="legend"><span><i style="background:#EF9F27;"></i>P&L at expiry</span></div>
+    </div>
+
+    <h3 style="font-size:15px;font-weight:500;margin-bottom:12px;">Three scenarios</h3>
+    <div class="scenario-grid">
+      <div class="sc-card active" id="sps-0" onclick="spScenario(0)"><div class="scp">Stock stays above K</div><div class="scd">Option expires worthless</div></div>
+      <div class="sc-card" id="sps-1" onclick="spScenario(1)"><div class="scp">Stock at breakeven</div><div class="scd">Zero net gain/loss</div></div>
+      <div class="sc-card" id="sps-2" onclick="spScenario(2)"><div class="scp">Stock crashes</div><div class="scd">Obligated to buy high</div></div>
+    </div>
+    <div class="outcome" id="sp-outcome"></div>
+  </div>
+</div>
+
+<div id="tab-compare" class="page" style="display:none;">
+  <div class="section">
+    <h2 class="sec-title">All four positions side by side</h2>
+    <p class="sec-body">Same stock price, same strike, same premium — four completely different payoff profiles. Adjust the sliders to see how they diverge.</p>
+
+    <div style="background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:12px;padding:20px;margin-bottom:20px;">
+      <div class="sl-row"><label>Strike price (K)</label><input type="range" id="cm-K" min="70" max="140" value="100" step="1" oninput="updateCompare()"><span class="sl-val" id="cm-Kv">$100</span></div>
+      <div class="sl-row"><label>Premium</label><input type="range" id="cm-P" min="1" max="20" value="7" step="1" oninput="updateCompare()"><span class="sl-val" id="cm-Pv">$7</span></div>
+      <div style="position:relative;width:100%;height:260px;margin-top:14px;"><canvas id="cm-ch"></canvas></div>
+      <div class="legend">
+        <span><i style="background:#1D9E75;"></i>Long call</span>
+        <span><i style="background:#185FA5;"></i>Long put</span>
+        <span><i style="background:#E24B4A;"></i>Short call</span>
+        <span><i style="background:#EF9F27;"></i>Short put</span>
+      </div>
+    </div>
+
+    <table class="compare-table">
+      <thead><tr><th>Position</th><th>View</th><th>Max profit</th><th>Max loss</th><th>Breakeven</th><th>Risk</th></tr></thead>
+      <tbody>
+        <tr><td>Long call</td><td>Bullish</td><td class="green">Unlimited</td><td class="red">Premium</td><td>K + Premium</td><td>Low (premium only)</td></tr>
+        <tr><td>Short call</td><td>Neutral/Bearish</td><td class="green">Premium</td><td class="red">Unlimited</td><td>K + Premium</td><td>Very high</td></tr>
+        <tr><td>Long put</td><td>Bearish</td><td class="green">K − Premium</td><td class="red">Premium</td><td>K − Premium</td><td>Low (premium only)</td></tr>
+        <tr><td>Short put</td><td>Neutral/Bullish</td><td class="green">Premium</td><td class="red">K − Premium</td><td>K − Premium</td><td>Moderate–High</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">The key insight: long positions (buyers) have asymmetric payoffs — capped loss, large potential gain. Short positions (sellers) have the opposite — capped gain, large potential loss. Neither is inherently "better"; they serve different goals.</div>
+  </div>
+</div>
+
+<script>
+// helpers
+function normCDF(x){
+  const p=0.3275911,a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429;
+  const s=x<0?-1:1; x=Math.abs(x)/Math.SQRT2;
+  const t=1/(1+p*x);
+  return 0.5*(1+s*(1-(((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x)));
+}
+function bsCall(S,K,T,v,r){if(T<=0)return Math.max(0,S-K);const d1=(Math.log(S/K)+(r+.5*v*v)*T)/(v*Math.sqrt(T)),d2=d1-v*Math.sqrt(T);return S*normCDF(d1)-K*Math.exp(-r*T)*normCDF(d2);}
+function bsPut(S,K,T,v,r){return bsCall(S,K,T,v,r)-S+K*Math.exp(-r*T);}
+function prices(lo=60,hi=160){const a=[];for(let s=lo;s<=hi;s+=2)a.push(s);return a;}
+function fmt(v){return(v>=0?'+$':'-$')+Math.abs(v).toFixed(2);}
+function gid(id){return document.getElementById(id);}
+function setv(id,v){const el=gid(id);if(el)el.textContent=v;}
+
+const charts={};
+function mkChart(id,labels,datasets){
+  if(charts[id]){try{charts[id].destroy();}catch(e){}}
+  charts[id]=new Chart(gid(id),{type:'line',data:{labels,datasets},options:{
+    responsive:true,maintainAspectRatio:false,animation:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{title:c=>'Expires at $'+labels[c[0].dataIndex],label:c=>{const v=c.parsed.y;return(v>=0?' Profit: +$':' Loss: -$')+Math.abs(v).toFixed(2);}}}},
+    scales:{
+      x:{ticks:{maxTicksLimit:9,callback:(v,i)=>'$'+labels[i],font:{size:11},color:'#aaa'},grid:{color:'rgba(0,0,0,0.04)'},border:{color:'transparent'}},
+      y:{ticks:{callback:v=>(v>=0?'+$':'-$')+Math.abs(v).toFixed(0),font:{size:11},color:'#aaa'},grid:{color:c=>c.tick.value===0?'rgba(0,0,0,0.18)':'rgba(0,0,0,0.04)'},border:{color:'transparent'}}
+    }
+  }});
+}
+function ds(pays,color,dash){return{data:pays,borderColor:color,backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:0,borderDash:dash||[]};}
+function mainDS(pays){return{data:pays,segment:{borderColor:c=>c.p1.parsed.y>=0?'#1D9E75':'#E24B4A'},backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:0};}
+
+// ── tab switching ──
+function showTab(id){
+  document.querySelectorAll('[id^="tab-"]').forEach(el=>el.style.display='none');
+  gid('tab-'+id).style.display='block';
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  const inits={overview:updateOverview,long_call:updateLC,short_call:updateSC,long_put:updateLP,short_put:updateSP,compare:updateCompare};
+  if(inits[id])inits[id]();
+}
+
+// ── OVERVIEW ──
+function updateOverview(){
+  const K=+gid('ov-K').value,P=+gid('ov-P').value;
+  setv('ov-Kv','$'+K); setv('ov-Pv','$'+P);
+  const px=prices();
+  mkChart('ov-ch',px,[
+    ds(px.map(s=>Math.max(0,s-K)-P),'#1D9E75'),
+    ds(px.map(s=>Math.max(0,K-s)-P),'#185FA5'),
+    ds(px.map(s=>P-Math.max(0,s-K)),'#E24B4A'),
+    ds(px.map(s=>P-Math.max(0,K-s)),'#EF9F27'),
+  ]);
+}
+
+// ── LONG CALL ──
+function updateLC(){
+  const S=+gid('lc-S').value,K=+gid('lc-K').value,P=+gid('lc-P').value,E=+gid('lc-E').value;
+  setv('lc-Sv','$'+S);setv('lc-Kv','$'+K);setv('lc-Pv','$'+P);setv('lc-Ev','$'+E);
+  const pnl=Math.max(0,E-K)-P;
+  const el=gid('lc-pnl');el.textContent=fmt(pnl);el.style.color=pnl>=0?'#0F6E56':'#A32D2D';
+  setv('lc-be','$'+(K+P)); setv('lc-ml','-$'+P);
+  const px=prices();
+  mkChart('lc-ch',px,[mainDS(px.map(s=>Math.max(0,s-K)-P))]);
+}
+const lcScens=[
+  (K,P)=>{const E=K+P+8;return{E,text:`Stock at $${E}, which is $${8} above breakeven. You exercise the call: buy at $${K}, sell at $${E}. Gross profit $${E-K}, minus premium $${P} = net profit $${E-K-P}.`,pill:'pill-win',label:'Profit: +$'+(E-K-P)}},
+  (K,P)=>{const E=K+P;return{E,text:`Stock at breakeven $${E}. Your $${E-K} intrinsic value exactly covers the $${P} premium. Net P&L is zero — you're made whole but gained nothing.`,pill:'pill-flat',label:'Breakeven: $0'}},
+  (K,P)=>{const E=K-15;return{E,text:`Stock at $${E}, well below the strike. You would never exercise the right to buy at $${K} when market is $${E}. Option expires worthless. You lose only the $${P} premium paid — nothing more.`,pill:'pill-lose',label:'Loss: -$'+P}},
+];
+function lcScenario(i){
+  const K=+gid('lc-K').value,P=+gid('lc-P').value;
+  const sc=lcScens[i](K,P);
+  [0,1,2].forEach(j=>{gid('lcs-'+j).classList.toggle('active',j===i);});
+  gid('lc-E').value=sc.E;gid('lc-Ev').textContent='$'+sc.E;
+  gid('lc-outcome').innerHTML=`<div class="o-row"><span class="ok">Situation</span><span class="ov">${sc.text}</span></div><div><span class="pill ${sc.pill}">${sc.label}</span></div>`;
+  updateLC();
+}
+
+// ── SHORT CALL ──
+let scPov='sell';
+window.scSetPov=function(p){
+  scPov=p;
+  gid('sc-pov-sell').classList.toggle('active',p==='sell');
+  gid('sc-pov-buy').classList.toggle('active',p==='buy');
+  updateSC();
+};
+function updateSC(){
+  const S=+gid('sc-S').value,K=+gid('sc-K').value,P=+gid('sc-P').value,E=+gid('sc-E').value;
+  setv('sc-Sv','$'+S);setv('sc-Kv','$'+K);setv('sc-Pv','$'+P);setv('sc-Ev','$'+E);
+  const sellPnl=P-Math.max(0,E-K);
+  const pnl=scPov==='sell'?sellPnl:-sellPnl;
+  const el=gid('sc-pnl');el.textContent=fmt(pnl);el.style.color=pnl>=0?'#0F6E56':'#A32D2D';
+  setv('sc-be','$'+(K+P));setv('sc-mp','+$'+P);
+  const px=prices();
+  const sellPays=px.map(s=>P-Math.max(0,s-K));
+  const pays=scPov==='sell'?sellPays:sellPays.map(v=>-v);
+  mkChart('sc-ch',px,[mainDS(pays)]);
+  const leg=gid('sc-legend');
+  leg.innerHTML=scPov==='sell'?'<span><i style="background:#E24B4A;"></i>Seller P&L</span>':'<span><i style="background:#1D9E75;"></i>Buyer P&L (what you give up)</span>';
+}
+const scScens=[
+  (K,P)=>{const E=K-5;return{E,text:`Stock at $${E}, below the $${K} strike. The buyer won't exercise — why buy at $${K} when the stock is $${E}? Option expires worthless. You keep the full $${P} premium.`,pill:'pill-win',label:'Full premium: +$'+P}},
+  (K,P)=>{const E=K+P;return{E,text:`Stock at $${E} (= strike $${K} + premium $${P}). The buyer exercises: you sell at $${K} but stock is worth $${E}. Your loss = $${E-K}, offset by $${P} premium. Net P&L = zero.`,pill:'pill-flat',label:'Breakeven: $0'}},
+  (K,P)=>{const E=K+25;return{E,text:`Stock surges to $${E}. Buyer exercises: you must sell at $${K} something worth $${E}. Loss per share = $${E-K}. Minus the $${P} premium = net loss $${E-K-P}. This is why naked short calls are so dangerous.`,pill:'pill-lose',label:'Loss: -$'+(E-K-P)}},
+];
+function scScenario(i){
+  const K=+gid('sc-K').value,P=+gid('sc-P').value;
+  const sc=scScens[i](K,P);
+  [0,1,2].forEach(j=>{gid('scs-'+j).classList.toggle('active',j===i);});
+  gid('sc-E').value=sc.E;gid('sc-Ev').textContent='$'+sc.E;
+  gid('sc-outcome').innerHTML=`<div class="o-row"><span class="ok">Situation</span><span class="ov">${sc.text}</span></div><div><span class="pill ${sc.pill}">${sc.label}</span></div>`;
+  updateSC();
+}
+
+// ── LONG PUT ──
+function updateLP(){
+  const S=+gid('lp-S').value,K=+gid('lp-K').value,P=+gid('lp-P').value,E=+gid('lp-E').value;
+  setv('lp-Sv','$'+S);setv('lp-Kv','$'+K);setv('lp-Pv','$'+P);setv('lp-Ev','$'+E);
+  const pnl=Math.max(0,K-E)-P;
+  const el=gid('lp-pnl');el.textContent=fmt(pnl);el.style.color=pnl>=0?'#0F6E56':'#A32D2D';
+  setv('lp-be','$'+(K-P));setv('lp-ml','-$'+P);
+  const px=prices();
+  mkChart('lp-ch',px,[{data:px.map(s=>Math.max(0,K-s)-P),segment:{borderColor:c=>c.p1.parsed.y>=0?'#185FA5':'#E24B4A'},backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:0}]);
+}
+const lpScens=[
+  (K,P)=>{const E=K-P-10;return{E,text:`Stock crashes to $${E}, well below breakeven $${K-P}. You exercise: sell at $${K} something worth $${E}. Gross gain $${K-E}, minus premium $${P} = net profit $${K-E-P}.`,pill:'pill-win',label:'Profit: +$'+(K-E-P)}},
+  (K,P)=>{const E=K-P;return{E,text:`Stock at breakeven $${E}. Your $${K-E} intrinsic value exactly covers the $${P} premium paid. Net P&L is zero.`,pill:'pill-flat',label:'Breakeven: $0'}},
+  (K,P)=>{const E=K+12;return{E,text:`Stock rallies to $${E}. You wouldn't sell at $${K} when the market pays $${E}. Option expires worthless. You lose only the $${P} premium — the stock's gain is completely separate.`,pill:'pill-lose',label:'Loss: -$'+P}},
+];
+function lpScenario(i){
+  const K=+gid('lp-K').value,P=+gid('lp-P').value;
+  const sc=lpScens[i](K,P);
+  [0,1,2].forEach(j=>{gid('lps-'+j).classList.toggle('active',j===i);});
+  gid('lp-E').value=sc.E;gid('lp-Ev').textContent='$'+sc.E;
+  gid('lp-outcome').innerHTML=`<div class="o-row"><span class="ok">Situation</span><span class="ov">${sc.text}</span></div><div><span class="pill ${sc.pill}">${sc.label}</span></div>`;
+  updateLP();
+}
+
+// ── SHORT PUT ──
+function updateSP(){
+  const S=+gid('sp-S').value,K=+gid('sp-K').value,P=+gid('sp-P').value,E=+gid('sp-E').value;
+  setv('sp-Sv','$'+S);setv('sp-Kv','$'+K);setv('sp-Pv','$'+P);setv('sp-Ev','$'+E);
+  const pnl=P-Math.max(0,K-E);
+  const el=gid('sp-pnl');el.textContent=fmt(pnl);el.style.color=pnl>=0?'#0F6E56':'#A32D2D';
+  setv('sp-be','$'+(K-P));setv('sp-mp','+$'+P);
+  const px=prices();
+  mkChart('sp-ch',px,[{data:px.map(s=>P-Math.max(0,K-s)),segment:{borderColor:c=>c.p1.parsed.y>=0?'#EF9F27':'#E24B4A'},backgroundColor:'transparent',borderWidth:2.5,pointRadius:0,tension:0}]);
+}
+const spScens=[
+  (K,P)=>{const E=K+10;return{E,text:`Stock stays at $${E}, above the $${K} strike. The buyer won't sell to you at $${K} when they can sell for $${E} in the market. Option expires worthless. You keep the $${P} premium.`,pill:'pill-win',label:'Full premium: +$'+P}},
+  (K,P)=>{const E=K-P;return{E,text:`Stock at breakeven $${E}. Buyer exercises: you buy at $${K} something worth $${E}. Loss = $${K-E}, but you already collected $${P} premium. Net P&L = zero.`,pill:'pill-flat',label:'Breakeven: $0'}},
+  (K,P)=>{const E=K-20;return{E,text:`Stock crashes to $${E}. Buyer exercises and forces you to buy at $${K}. You now own stock worth $${E}, bought at $${K}. Loss = $${K-E}, offset by $${P} premium = net -$${K-E-P}. The stock may recover — but you're in at a high price.`,pill:'pill-lose',label:'Loss: -$'+(K-E-P)}},
+];
+function spScenario(i){
+  const K=+gid('sp-K').value,P=+gid('sp-P').value;
+  const sc=spScens[i](K,P);
+  [0,1,2].forEach(j=>{gid('sps-'+j).classList.toggle('active',j===i);});
+  gid('sp-E').value=sc.E;gid('sp-Ev').textContent='$'+sc.E;
+  gid('sp-outcome').innerHTML=`<div class="o-row"><span class="ok">Situation</span><span class="ov">${sc.text}</span></div><div><span class="pill ${sc.pill}">${sc.label}</span></div>`;
+  updateSP();
+}
+
+// ── COMPARE ──
+function updateCompare(){
+  const K=+gid('cm-K').value,P=+gid('cm-P').value;
+  setv('cm-Kv','$'+K);setv('cm-Pv','$'+P);
+  const px=prices();
+  const ch=charts['cm-ch'];if(ch){try{ch.destroy();}catch(e){}}
+  charts['cm-ch']=new Chart(gid('cm-ch'),{type:'line',data:{labels:px,datasets:[
+    {data:px.map(s=>Math.max(0,s-K)-P),borderColor:'#1D9E75',backgroundColor:'transparent',borderWidth:2,pointRadius:0,tension:0},
+    {data:px.map(s=>Math.max(0,K-s)-P),borderColor:'#185FA5',backgroundColor:'transparent',borderWidth:2,pointRadius:0,tension:0},
+    {data:px.map(s=>P-Math.max(0,s-K)),borderColor:'#E24B4A',backgroundColor:'transparent',borderWidth:2,pointRadius:0,tension:0,borderDash:[5,3]},
+    {data:px.map(s=>P-Math.max(0,K-s)),borderColor:'#EF9F27',backgroundColor:'transparent',borderWidth:2,pointRadius:0,tension:0,borderDash:[5,3]},
+  ]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{callbacks:{title:c=>'Stock = $'+px[c[0].dataIndex]}}},scales:{x:{ticks:{maxTicksLimit:9,callback:(v,i)=>'$'+px[i],font:{size:11},color:'#aaa'},grid:{color:'rgba(0,0,0,0.04)'},border:{color:'transparent'}},y:{ticks:{callback:v=>(v>=0?'+$':'-$')+Math.abs(v).toFixed(0),font:{size:11},color:'#aaa'},grid:{color:c=>c.tick.value===0?'rgba(0,0,0,0.18)':'rgba(0,0,0,0.04)'},border:{color:'transparent'}}}}});
+}
+
+// init
+updateOverview();
+lcScenario(0);
+scScenario(0);
+lpScenario(0);
+spScenario(0);
+updateCompare();
+</script>
+</body>
+</html>

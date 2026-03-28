@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Options — Learning Hub</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0e1520;color:#fff;min-height:100vh;display:flex;flex-direction:column;}
+
+header{padding:28px 48px 0;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:Georgia,serif;font-size:22px;color:#fff;letter-spacing:-0.3px;}
+.logo-sub{font-size:10px;color:#2d4255;text-transform:uppercase;letter-spacing:0.1em;margin-top:2px;}
+.header-tag{font-size:12px;color:#2d4255;text-transform:uppercase;letter-spacing:0.1em;}
+
+.hero{padding:72px 48px 60px;max-width:900px;}
+.hero-eyebrow{font-size:11px;font-weight:600;color:#1D9E75;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;}
+.hero h1{font-family:Georgia,serif;font-size:52px;font-weight:normal;color:#fff;line-height:1.1;margin-bottom:20px;letter-spacing:-0.5px;}
+.hero h1 em{color:#1D9E75;font-style:normal;}
+.hero p{font-size:16px;color:#5a7a8a;line-height:1.85;max-width:560px;}
+
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,0.06);flex:1;}
+
+.module{background:#0e1520;padding:40px 48px;transition:background .2s;cursor:pointer;text-decoration:none;color:inherit;display:block;position:relative;overflow:hidden;}
+.module:hover{background:#111e2e;}
+.module::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;transform:scaleX(0);transform-origin:left;transition:transform .25s;}
+.m1::before{background:#1D9E75;}
+.m2::before{background:#185FA5;}
+.module:hover::before{transform:scaleX(1);}
+
+.m-num{font-size:10px;font-weight:700;color:#2d4255;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:20px;}
+.m-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+.m-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.5;}
+.icon-1{background:rgba(29,158,117,0.12);color:#1D9E75;}
+.icon-2{background:rgba(24,95,165,0.12);color:#185FA5;}
+
+.m-title{font-family:Georgia,serif;font-size:26px;font-weight:normal;color:#fff;margin-bottom:8px;line-height:1.2;}
+.m-desc{font-size:14px;color:#4a6b7a;line-height:1.75;margin-bottom:24px;}
+
+.m-topics{display:flex;flex-direction:column;gap:4px;margin-bottom:28px;}
+.mt{display:flex;align-items:center;gap:8px;font-size:12px;color:#3a5060;}
+.mt-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0;}
+.dot-green{background:#1D9E75;}
+.dot-blue{background:#185FA5;}
+
+.m-cta{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;padding:10px 20px;border-radius:8px;transition:all .15s;}
+.cta-1{background:rgba(29,158,117,0.12);color:#1D9E75;}
+.cta-2{background:rgba(24,95,165,0.12);color:#5baeff;}
+.module:hover .cta-1{background:rgba(29,158,117,0.2);}
+.module:hover .cta-2{background:rgba(24,95,165,0.2);}
+.cta-arrow{transition:transform .15s;}
+.module:hover .cta-arrow{transform:translateX(4px);}
+
+.path-section{background:rgba(255,255,255,0.03);border-top:0.5px solid rgba(255,255,255,0.06);padding:40px 48px;}
+.path-title{font-size:11px;font-weight:700;color:#2d4255;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:20px;}
+.path-steps{display:flex;gap:0;overflow-x:auto;padding-bottom:4px;}
+.path-step{display:flex;align-items:center;gap:0;flex-shrink:0;}
+.ps-node{padding:8px 14px;border-radius:20px;font-size:12px;font-weight:500;white-space:nowrap;}
+.ps-arrow{padding:0 6px;color:#2d4255;font-size:14px;}
+.n1{background:rgba(29,158,117,0.12);color:#1D9E75;}
+.n2{background:rgba(29,158,117,0.09);color:#1a7a58;}
+.n3{background:rgba(24,95,165,0.12);color:#5baeff;}
+.n4{background:rgba(24,95,165,0.1);color:#3a80cc;}
+.n5{background:rgba(83,74,183,0.12);color:#9b96e8;}
+
+footer{padding:24px 48px;border-top:0.5px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;}
+.footer-note{font-size:12px;color:#1d3040;}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">Options</div>
+    <div class="logo-sub">Learning Hub</div>
+  </div>
+  <div class="header-tag">Interactive reference</div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">Start learning</div>
+  <h1>Master options,<br>one concept <em>at a time</em></h1>
+  <p>Two interactive modules that take you from zero to confident. Start with the fundamentals, then explore every strategy ever traded — all with live charts you can control.</p>
+</div>
+
+<div class="cards">
+
+  <a href="calls_puts.html" class="module m1">
+    <div class="m-num">Module 01</div>
+    <div class="m-icon icon-1">
+      <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+    </div>
+    <div class="m-title">Calls & Puts</div>
+    <div class="m-desc">The four fundamental positions every trader must understand. Interactive payoff charts, three-scenario walkthroughs, and a full side-by-side comparison.</div>
+    <div class="m-topics">
+      <div class="mt"><span class="mt-dot dot-green"></span>Long call — right to buy, bullish</div>
+      <div class="mt"><span class="mt-dot dot-green"></span>Short call — obligation to sell, income</div>
+      <div class="mt"><span class="mt-dot dot-green"></span>Long put — right to sell, bearish</div>
+      <div class="mt"><span class="mt-dot dot-green"></span>Short put — obligation to buy, income</div>
+      <div class="mt"><span class="mt-dot dot-green"></span>All four compared side-by-side</div>
+    </div>
+    <span class="m-cta cta-1">Open module <span class="cta-arrow">→</span></span>
+  </a>
+
+  <a href="options_strategies.html" class="module m2">
+    <div class="m-num">Module 02</div>
+    <div class="m-icon icon-2">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    </div>
+    <div class="m-title">All Strategies</div>
+    <div class="m-desc">Every options strategy with a live interactive payoff chart. From simple spreads to iron condors, butterflies, and calendar spreads — 22 strategies with adjustable sliders.</div>
+    <div class="m-topics">
+      <div class="mt"><span class="mt-dot dot-blue"></span>Bullish — calls, bull spreads, credit puts</div>
+      <div class="mt"><span class="mt-dot dot-blue"></span>Bearish — puts, bear spreads, credit calls</div>
+      <div class="mt"><span class="mt-dot dot-blue"></span>Neutral — condors, butterflies, straddles</div>
+      <div class="mt"><span class="mt-dot dot-blue"></span>Hedging — covered call, collar, protective put</div>
+      <div class="mt"><span class="mt-dot dot-blue"></span>Advanced — ratio spreads, backspread, calendar</div>
+    </div>
+    <span class="m-cta cta-2">Open module <span class="cta-arrow">→</span></span>
+  </a>
+
+</div>
+
+<div class="path-section">
+  <div class="path-title">Suggested learning order</div>
+  <div class="path-steps">
+    <div class="path-step"><div class="ps-node n1">Long call</div><div class="ps-arrow">→</div></div>
+    <div class="path-step"><div class="ps-node n1">Long put</div><div class="ps-arrow">→</div></div>
+    <div class="path-step"><div class="ps-node n2">Short call & put</div><div class="ps-arrow">→</div></div>
+    <div class="path-step"><div class="ps-node n3">Vertical spreads</div><div class="ps-arrow">→</div></div>
+    <div class="path-step"><div class="ps-node n3">Straddle & strangle</div><div class="ps-arrow">→</div></div>
+    <div class="path-step"><div class="ps-node n4">Iron condor</div><div class="ps-arrow">→</div></div>
+    <div class="path-step"><div class="ps-node n4">Butterfly</div><div class="ps-arrow">→</div></div>
+    <div class="path-step"><div class="ps-node n5">Calendar & ratio</div></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-note">Open any .html file directly in your browser — no server required</div>
+  <div class="footer-note">All charts use live Black-Scholes pricing</div>
+</footer>
+
+</body>
+</html>
