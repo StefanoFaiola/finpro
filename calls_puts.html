@@ -9,26 +9,37 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f2ed;color:#1a1918;min-height:100vh;}
 
-header{background:#0e1520;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;}
-.hd-back{display:flex;align-items:center;gap:10px;color:#4a6b7a;font-size:13px;text-decoration:none;transition:color .15s;}
-.hd-back:hover{color:#9eb8c4;}
-.hd-back svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;}
-.hd-title{font-family:Georgia,serif;font-size:17px;color:#fff;letter-spacing:-0.2px;}
-.hd-tag{font-size:10px;color:#2d4255;text-transform:uppercase;letter-spacing:0.1em;}
+/* ── UNIFIED HEADER ── */
+header{background:#0e1520;padding:0 40px;height:56px;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid rgba(255,255,255,0.06);position:sticky;top:0;z-index:20;}
+.hd-logo{text-decoration:none;display:flex;flex-direction:column;gap:1px;}
+.hd-logo-name{font-family:Georgia,serif;font-size:17px;color:#fff;letter-spacing:-0.2px;}
+.hd-logo-sub{font-size:9px;color:#2d4255;text-transform:uppercase;letter-spacing:0.1em;}
+.hd-center{text-align:center;}
+.hd-title{font-family:Georgia,serif;font-size:15px;color:#fff;letter-spacing:-0.2px;}
+.hd-tag{font-size:9px;color:#2d4255;text-transform:uppercase;letter-spacing:0.1em;margin-top:1px;}
+.hd-nav{display:flex;align-items:center;gap:4px;}
+.hd-nav a{display:flex;align-items:center;gap:5px;font-size:12px;color:#4a6b7a;text-decoration:none;padding:5px 10px;border-radius:6px;transition:color .15s,background .15s;white-space:nowrap;}
+.hd-nav a:hover{color:#9eb8c4;background:rgba(255,255,255,0.04);}
+.hd-nav a svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0;}
+.hd-next{color:#1a7a58 !important;}
+.hd-next:hover{color:#1D9E75 !important;background:rgba(29,158,117,0.08) !important;}
 
-.hero{background:#0e1520;padding:40px 40px 60px;border-bottom:0.5px solid rgba(255,255,255,0.05);}
+/* ── HERO ── */
+.hero{background:#0e1520;padding:36px 40px 48px;border-bottom:0.5px solid rgba(255,255,255,0.05);}
 .hero-inner{max-width:860px;margin:0 auto;}
-.hero h1{font-family:Georgia,serif;font-size:36px;font-weight:normal;color:#fff;margin-bottom:10px;line-height:1.2;}
+.hero-eyebrow{font-size:10px;font-weight:700;color:#1D9E75;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;}
+.hero h1{font-family:Georgia,serif;font-size:34px;font-weight:normal;color:#fff;margin-bottom:10px;line-height:1.2;}
 .hero p{font-size:15px;color:#5a7a8a;line-height:1.8;max-width:600px;}
 
-.tabs-outer{background:#f4f2ed;border-bottom:0.5px solid rgba(0,0,0,0.1);position:sticky;top:0;z-index:10;}
+/* ── TABS ── */
+.tabs-outer{background:#f4f2ed;border-bottom:0.5px solid rgba(0,0,0,0.1);}
 .tabs-inner{max-width:860px;margin:0 auto;display:flex;gap:0;}
 .tab-btn{padding:14px 24px;font-size:14px;border:none;background:transparent;cursor:pointer;color:#888;border-bottom:2px solid transparent;transition:all .15s;font-family:inherit;}
 .tab-btn:hover{color:#333;}
 .tab-btn.active{color:#0e1520;border-bottom-color:#1D9E75;font-weight:500;}
 
+/* ── CONTENT ── */
 .page{max-width:860px;margin:0 auto;padding:36px 40px;}
-
 .section{margin-bottom:36px;}
 .sec-title{font-family:Georgia,serif;font-size:22px;font-weight:normal;color:#0a1218;margin-bottom:6px;}
 .sec-body{font-size:14px;color:#3d3c3a;line-height:1.85;margin-bottom:18px;}
@@ -100,44 +111,44 @@ header{background:#0e1520;padding:18px 40px;display:flex;align-items:center;just
 .rt-title{font-weight:600;font-size:13px;margin-bottom:4px;}
 .rt-body{font-size:12px;color:#555;line-height:1.6;}
 
+/* ── MODULE NAV FOOTER ── */
+.mod-nav{background:#0e1520;border-top:0.5px solid rgba(255,255,255,0.06);padding:20px 40px;display:flex;justify-content:space-between;align-items:center;}
+.mod-nav a{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:13px;color:#4a6b7a;padding:8px 14px;border-radius:8px;transition:all .15s;}
+.mod-nav a:hover{color:#9eb8c4;background:rgba(255,255,255,0.04);}
+.mod-nav a svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;}
+.mod-nav .fwd{color:#1a7a58;}
+.mod-nav .fwd:hover{color:#1D9E75;background:rgba(29,158,117,0.08);}
+.mod-nav-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#2d4255;margin-bottom:2px;}
+.mod-nav-name{font-size:13px;}
+
 @media(max-width:700px){
-  header{padding:12px 16px;}
-  .hd-back{font-size:12px;}
-  .hd-title{font-size:14px;}
-  .hd-spacer{display:none;}
+  header{padding:0 16px;}
+  .hd-logo-sub{display:none;}
   .hd-tag{display:none;}
-  .hero{padding:28px 16px 36px;}
+  .hd-nav a span{display:none;}
+  .hd-nav a{padding:6px 8px;}
+  .hero{padding:24px 16px 32px;}
   .hero h1{font-size:26px;}
   .hero p{font-size:14px;}
-
-  .tabs-inner{overflow-x:auto;-webkit-overflow-scrolling:touch;gap:0;padding:0 16px;}
+  .tabs-inner{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 16px;}
   .tab-btn{padding:12px 14px;font-size:13px;white-space:nowrap;flex-shrink:0;}
-
   .page{padding:24px 16px;}
-
   .two-col{grid-template-columns:1fr;}
-
   .rights-table{grid-template-columns:1fr;gap:1px;}
   .rt-cell.header{display:none;}
-
   .scenario-grid{grid-template-columns:1fr 1fr;}
-
   .stats{grid-template-columns:1fr 1fr;}
-
   .sl-row label{width:110px;font-size:11px;}
   .sl-row input[type=range]{width:auto;}
-
   .pov-toggle{width:100%;}
   .pov-btn{flex:1;text-align:center;}
-
-  .vol-cols{grid-template-columns:1fr 1fr;}
-
   .compare-table{font-size:11px;}
   .compare-table th,.compare-table td{padding:7px 6px;}
   .compare-table th:nth-child(5),.compare-table td:nth-child(5),
   .compare-table th:nth-child(6),.compare-table td:nth-child(6){display:none;}
+  .mod-nav{padding:16px 16px;}
+  .mod-nav-label{font-size:9px;}
 }
-
 @media(max-width:420px){
   .hero h1{font-size:22px;}
   .scenario-grid{grid-template-columns:1fr;}
@@ -148,20 +159,31 @@ header{background:#0e1520;padding:18px 40px;display:flex;align-items:center;just
 </head>
 <body>
 
+<!-- ── UNIFIED HEADER ── -->
 <header>
-  <a href="index.html" class="hd-back">
-    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    Back to hub
+  <a href="index.html" class="hd-logo">
+    <div class="hd-logo-name">Options</div>
+    <div class="hd-logo-sub">Learning Hub</div>
   </a>
-  <div style="text-align:center;">
-    <div class="hd-title">Calls & Puts</div>
-    <div class="hd-tag">Options fundamentals</div>
+  <div class="hd-center">
+    <div class="hd-title">Calls &amp; Puts</div>
+    <div class="hd-tag">Module 01 · Fundamentals</div>
   </div>
-  <div class="hd-spacer" style="width:100px;"></div>
+  <nav class="hd-nav">
+    <a href="index.html">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      <span>Hub</span>
+    </a>
+    <a href="options_strategies.html" class="hd-next">
+      <span>All Strategies</span>
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+  </nav>
 </header>
 
 <div class="hero">
   <div class="hero-inner">
+    <div class="hero-eyebrow">Module 01</div>
     <h1>The four positions<br>every trader must know</h1>
     <p>Every option trade is one of four things: buying a call, selling a call, buying a put, or selling a put. Understand these four shapes and every strategy in the world is just a combination of them.</p>
   </div>
@@ -198,7 +220,7 @@ header{background:#0e1520;padding:18px 40px;display:flex;align-items:center;just
 
   <div class="section">
     <h2 class="sec-title">The four payoff shapes</h2>
-    <p class="sec-body">Drag the sliders to see how all four positions respond to the same stock price. Notice how buyer positions (green) and seller positions (red) are exact mirror images of each other.</p>
+    <p class="sec-body">Drag the sliders to see how all four positions respond to the same stock price. Notice how buyer positions (green/blue) and seller positions (red/orange) are exact mirror images of each other.</p>
 
     <div style="background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:12px;padding:20px;">
       <div class="sl-row"><label>Strike price (K)</label><input type="range" id="ov-K" min="70" max="140" value="100" step="1" oninput="updateOverview()"><span class="sl-val" id="ov-Kv">$100</span></div>
@@ -245,12 +267,12 @@ header{background:#0e1520;padding:18px 40px;display:flex;align-items:center;just
       <div class="sl-row"><label>Premium paid</label><input type="range" id="lc-P" min="1" max="25" value="7" step="1" oninput="updateLC()"><span class="sl-val" id="lc-Pv">$7</span></div>
       <div class="sl-row"><label>Stock at expiry</label><input type="range" id="lc-E" min="60" max="160" value="115" step="1" oninput="updateLC()"><span class="sl-val" id="lc-Ev">$115</span></div>
       <div class="stats">
-        <div class="sc"><div class="sl">Your P&L</div><div class="sv" id="lc-pnl">—</div></div>
+        <div class="sc"><div class="sl">Your P&amp;L</div><div class="sv" id="lc-pnl">—</div></div>
         <div class="sc"><div class="sl">Breakeven</div><div class="sv" id="lc-be">—</div></div>
         <div class="sc"><div class="sl">Max loss</div><div class="sv" style="color:#A32D2D" id="lc-ml">—</div></div>
       </div>
       <div class="chart-wrap"><canvas id="lc-ch"></canvas></div>
-      <div class="legend"><span><i style="background:#1D9E75;"></i>P&L at expiry</span></div>
+      <div class="legend"><span><i style="background:#1D9E75;"></i>P&amp;L at expiry</span></div>
     </div>
 
     <h3 style="font-size:15px;font-weight:500;margin-bottom:12px;">Three scenarios</h3>
@@ -297,7 +319,7 @@ header{background:#0e1520;padding:18px 40px;display:flex;align-items:center;just
       <div class="sl-row"><label>Premium</label><input type="range" id="sc-P" min="1" max="25" value="6" step="1" oninput="updateSC()"><span class="sl-val" id="sc-Pv">$6</span></div>
       <div class="sl-row"><label>Stock at expiry</label><input type="range" id="sc-E" min="60" max="160" value="102" step="1" oninput="updateSC()"><span class="sl-val" id="sc-Ev">$102</span></div>
       <div class="stats">
-        <div class="sc"><div class="sl">Your P&L</div><div class="sv" id="sc-pnl">—</div></div>
+        <div class="sc"><div class="sl">Your P&amp;L</div><div class="sv" id="sc-pnl">—</div></div>
         <div class="sc"><div class="sl">Breakeven</div><div class="sv" id="sc-be">—</div></div>
         <div class="sc"><div class="sl">Max profit</div><div class="sv" style="color:#0F6E56" id="sc-mp">—</div></div>
       </div>
@@ -344,12 +366,12 @@ header{background:#0e1520;padding:18px 40px;display:flex;align-items:center;just
       <div class="sl-row"><label>Premium paid</label><input type="range" id="lp-P" min="1" max="25" value="7" step="1" oninput="updateLP()"><span class="sl-val" id="lp-Pv">$7</span></div>
       <div class="sl-row"><label>Stock at expiry</label><input type="range" id="lp-E" min="60" max="160" value="82" step="1" oninput="updateLP()"><span class="sl-val" id="lp-Ev">$82</span></div>
       <div class="stats">
-        <div class="sc"><div class="sl">Your P&L</div><div class="sv" id="lp-pnl">—</div></div>
+        <div class="sc"><div class="sl">Your P&amp;L</div><div class="sv" id="lp-pnl">—</div></div>
         <div class="sc"><div class="sl">Breakeven</div><div class="sv" id="lp-be">—</div></div>
         <div class="sc"><div class="sl">Max loss</div><div class="sv" style="color:#A32D2D" id="lp-ml">—</div></div>
       </div>
       <div class="chart-wrap"><canvas id="lp-ch"></canvas></div>
-      <div class="legend"><span><i style="background:#185FA5;"></i>P&L at expiry</span></div>
+      <div class="legend"><span><i style="background:#185FA5;"></i>P&amp;L at expiry</span></div>
     </div>
 
     <h3 style="font-size:15px;font-weight:500;margin-bottom:12px;">Three scenarios</h3>
@@ -392,12 +414,12 @@ header{background:#0e1520;padding:18px 40px;display:flex;align-items:center;just
       <div class="sl-row"><label>Premium collected</label><input type="range" id="sp-P" min="1" max="25" value="5" step="1" oninput="updateSP()"><span class="sl-val" id="sp-Pv">$5</span></div>
       <div class="sl-row"><label>Stock at expiry</label><input type="range" id="sp-E" min="60" max="160" value="97" step="1" oninput="updateSP()"><span class="sl-val" id="sp-Ev">$97</span></div>
       <div class="stats">
-        <div class="sc"><div class="sl">Your P&L</div><div class="sv" id="sp-pnl">—</div></div>
+        <div class="sc"><div class="sl">Your P&amp;L</div><div class="sv" id="sp-pnl">—</div></div>
         <div class="sc"><div class="sl">Breakeven</div><div class="sv" id="sp-be">—</div></div>
         <div class="sc"><div class="sl">Max profit</div><div class="sv" style="color:#0F6E56" id="sp-mp">—</div></div>
       </div>
       <div class="chart-wrap"><canvas id="sp-ch"></canvas></div>
-      <div class="legend"><span><i style="background:#EF9F27;"></i>P&L at expiry</span></div>
+      <div class="legend"><span><i style="background:#EF9F27;"></i>P&amp;L at expiry</span></div>
     </div>
 
     <h3 style="font-size:15px;font-weight:500;margin-bottom:12px;">Three scenarios</h3>
@@ -441,16 +463,25 @@ header{background:#0e1520;padding:18px 40px;display:flex;align-items:center;just
   </div>
 </div>
 
+<!-- ── MODULE NAV FOOTER ── -->
+<div class="mod-nav">
+  <a href="index.html">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    <div>
+      <div class="mod-nav-label">Back</div>
+      <div class="mod-nav-name">Learning Hub</div>
+    </div>
+  </a>
+  <a href="options_strategies.html" class="fwd">
+    <div style="text-align:right;">
+      <div class="mod-nav-label">Next</div>
+      <div class="mod-nav-name">Module 02 — All Strategies</div>
+    </div>
+    <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+  </a>
+</div>
+
 <script>
-// helpers
-function normCDF(x){
-  const p=0.3275911,a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429;
-  const s=x<0?-1:1; x=Math.abs(x)/Math.SQRT2;
-  const t=1/(1+p*x);
-  return 0.5*(1+s*(1-(((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x)));
-}
-function bsCall(S,K,T,v,r){if(T<=0)return Math.max(0,S-K);const d1=(Math.log(S/K)+(r+.5*v*v)*T)/(v*Math.sqrt(T)),d2=d1-v*Math.sqrt(T);return S*normCDF(d1)-K*Math.exp(-r*T)*normCDF(d2);}
-function bsPut(S,K,T,v,r){return bsCall(S,K,T,v,r)-S+K*Math.exp(-r*T);}
 function prices(lo=60,hi=160){const a=[];for(let s=lo;s<=hi;s+=2)a.push(s);return a;}
 function fmt(v){return(v>=0?'+$':'-$')+Math.abs(v).toFixed(2);}
 function gid(id){return document.getElementById(id);}

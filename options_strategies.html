@@ -3,18 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Options strategies — interactive reference</title>
+<title>Options Strategies — Interactive Reference</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f2ed;color:#1a1918;display:flex;min-height:100vh;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f2ed;color:#1a1918;min-height:100vh;display:flex;flex-direction:column;}
 
-/* sidebar */
-#sidebar{width:240px;flex-shrink:0;background:#0e1520;height:100vh;position:sticky;top:0;overflow-y:auto;}
+/* ── UNIFIED HEADER ── */
+header{background:#0e1520;padding:0 40px;height:56px;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid rgba(255,255,255,0.06);flex-shrink:0;position:sticky;top:0;z-index:300;}
+.hd-logo{text-decoration:none;display:flex;flex-direction:column;gap:1px;}
+.hd-logo-name{font-family:Georgia,serif;font-size:17px;color:#fff;letter-spacing:-0.2px;}
+.hd-logo-sub{font-size:9px;color:#2d4255;text-transform:uppercase;letter-spacing:0.1em;}
+.hd-center{text-align:center;}
+.hd-title{font-family:Georgia,serif;font-size:15px;color:#fff;letter-spacing:-0.2px;}
+.hd-tag{font-size:9px;color:#2d4255;text-transform:uppercase;letter-spacing:0.1em;margin-top:1px;}
+.hd-nav{display:flex;align-items:center;gap:4px;}
+.hd-nav a{display:flex;align-items:center;gap:5px;font-size:12px;color:#4a6b7a;text-decoration:none;padding:5px 10px;border-radius:6px;transition:color .15s,background .15s;white-space:nowrap;}
+.hd-nav a:hover{color:#9eb8c4;background:rgba(255,255,255,0.04);}
+.hd-nav a svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0;}
+.hd-prev{color:#1a7a58 !important;}
+.hd-prev:hover{color:#1D9E75 !important;background:rgba(29,158,117,0.08) !important;}
+
+/* ── LAYOUT ── */
+.layout{display:flex;flex:1;min-height:0;}
+
+/* ── SIDEBAR ── */
+#sidebar{width:240px;flex-shrink:0;background:#0e1520;overflow-y:auto;}
 .sb-head{padding:16px 18px;border-bottom:0.5px solid rgba(255,255,255,0.07);}
-.sb-back{display:flex;align-items:center;gap:7px;color:#2d4255;font-size:11px;text-decoration:none;margin-bottom:12px;transition:color .15s;}
-.sb-back:hover{color:#4a6b7a;}
-.sb-back svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.5;}
 .sb-title{font-family:Georgia,serif;font-size:17px;color:#fff;letter-spacing:-0.2px;}
 .sb-sub{font-size:10px;color:#2d4255;text-transform:uppercase;letter-spacing:0.1em;margin-top:2px;}
 .cat-lbl{font-size:9px;font-weight:700;color:#233545;text-transform:uppercase;letter-spacing:0.12em;padding:14px 18px 4px;}
@@ -24,7 +39,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .s-dot{width:5px;height:5px;border-radius:50%;background:#223340;flex-shrink:0;transition:background .2s;}
 .s-btn.active .s-dot{background:#1D9E75;}
 
-/* main */
+/* ── MAIN ── */
 #main{flex:1;padding:32px 36px;min-width:0;overflow-y:auto;}
 .page-title{font-family:Georgia,serif;font-size:28px;font-weight:normal;color:#0a1218;margin-bottom:4px;}
 .page-cat{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;}
@@ -82,9 +97,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .dimmer{font-size:13px;color:#555;line-height:1.7;margin-bottom:14px;}
 
 /* ── mobile header (hidden on desktop) ── */
-#mob-header{display:none;position:fixed;top:0;left:0;right:0;height:52px;background:#0e1520;z-index:300;align-items:center;padding:0 16px;gap:12px;border-bottom:0.5px solid rgba(255,255,255,0.07);}
+#mob-header{display:none;background:#0e1520;z-index:400;align-items:center;padding:0 16px;gap:12px;border-bottom:0.5px solid rgba(255,255,255,0.07);height:48px;}
 #mob-header .mob-title{font-family:Georgia,serif;font-size:15px;color:#fff;flex:1;}
-#mob-back:hover{color:#9eb8c4;}
 #hamburger{background:none;border:none;cursor:pointer;padding:6px;color:#7a9aaa;display:flex;flex-direction:column;gap:4px;}
 #hamburger span{display:block;width:20px;height:1.5px;background:currentColor;border-radius:1px;transition:all .2s;}
 
@@ -92,8 +106,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 #overlay.show{display:block;}
 
 @media(max-width:768px){
-  #mob-header{display:flex;}
-  body{flex-direction:column;}
+  header{display:none;}
+  #mob-header{display:flex;position:sticky;top:0;}
+  body{display:block;}
+  .layout{display:block;}
 
   #sidebar{
     position:fixed;left:0;top:0;height:100%;width:260px;z-index:200;
@@ -102,36 +118,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   }
   #sidebar.open{transform:translateX(0);}
 
-  #main{
-    width:100%;padding:72px 16px 28px;
-    min-width:0;
-  }
+  #main{width:100%;padding:16px 16px 28px;}
 
   .section-card{padding:16px;}
-
   .leg-chip{font-size:12px;padding:4px 10px;}
-
   .controls{display:block;}
   .sl-row label{width:130px;font-size:11px;}
-
   .metrics{grid-template-columns:1fr 1fr;}
   .mc .mv{font-size:14px;}
-
   .cash-banner{padding:12px 14px;}
   .cash-amount{font-size:20px;}
-
   .chart-wrap{height:200px;}
-
   .page-title{font-size:22px;}
   .dimmer{font-size:13px;}
-
   .cat-badge{font-size:9px;}
-
-  .kterm .kd{font-size:12px;}
+  .hd-logo-sub{display:none;}
+  .hd-tag{display:none;}
 }
-
 @media(max-width:420px){
-  #main{padding:68px 12px 24px;}
+  #main{padding:12px 12px 24px;}
   .sl-row label{width:110px;}
   .metrics{grid-template-columns:1fr 1fr;}
   .chart-wrap{height:180px;}
@@ -140,34 +145,56 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </head>
 <body>
 
+<!-- ── UNIFIED HEADER (desktop) ── -->
+<header>
+  <a href="index.html" class="hd-logo">
+    <div class="hd-logo-name">Options</div>
+    <div class="hd-logo-sub">Learning Hub</div>
+  </a>
+  <div class="hd-center">
+    <div class="hd-title">All Strategies</div>
+    <div class="hd-tag">Module 02 · Interactive Reference</div>
+  </div>
+  <nav class="hd-nav">
+    <a href="calls_puts.html" class="hd-prev">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      <span>Calls &amp; Puts</span>
+    </a>
+    <a href="index.html">
+      <span>Hub</span>
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+  </nav>
+</header>
+
+<!-- ── MOBILE HEADER ── -->
 <div id="mob-header">
   <button id="hamburger" onclick="toggleSidebar()" aria-label="Open menu">
     <span></span><span></span><span></span>
   </button>
   <div class="mob-title">Options strategies</div>
-  <a href="index.html" id="mob-back" style="display:flex;align-items:center;gap:5px;color:#4a7a8a;font-size:12px;text-decoration:none;flex-shrink:0;">
+  <a href="calls_puts.html" style="display:flex;align-items:center;gap:5px;color:#4a7a8a;font-size:12px;text-decoration:none;flex-shrink:0;">
     <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;"><polyline points="15 18 9 12 15 6"/></svg>
-    Back
+    Calls &amp; Puts
   </a>
 </div>
+
 <div id="overlay" onclick="closeSidebar()"></div>
 
-<nav id="sidebar">
-  <div class="sb-head">
-    <a href="index.html" class="sb-back">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-      Back to hub
-    </a>
-    <div class="sb-title">Options strategies</div>
-    <div class="sb-sub">Interactive reference</div>
-  </div>
-  <div id="nav"></div>
-</nav>
+<div class="layout">
+  <nav id="sidebar">
+    <div class="sb-head">
+      <div class="sb-title">Options strategies</div>
+      <div class="sb-sub">Interactive reference</div>
+    </div>
+    <div id="nav"></div>
+  </nav>
 
-<main id="main"><div id="content"></div></main>
+  <main id="main"><div id="content"></div></main>
+</div>
 
 <script>
-/* ── helpers ─────────────────────────────────────── */
+/* ── Black-Scholes (used only for calendar spread internals) ── */
 function normCDF(x){
   const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;
   const sign=x<0?-1:1;x=Math.abs(x)/Math.SQRT2;
@@ -179,9 +206,6 @@ function bsCall(S,K,T,v,r){
   const d1=(Math.log(S/K)+(r+.5*v*v)*T)/(v*Math.sqrt(T));
   const d2=d1-v*Math.sqrt(T);
   return S*normCDF(d1)-K*Math.exp(-r*T)*normCDF(d2);
-}
-function bsPut(S,K,T,v,r){
-  return bsCall(S,K,T,v,r)-S+K*Math.exp(-r*T);
 }
 
 let activeChart=null;
@@ -210,7 +234,6 @@ function prices(lo=50,hi=180,step=2){
   const arr=[];for(let s=lo;s<=hi;s+=step)arr.push(s);return arr;
 }
 function fmt(v){return (v>=0?'+$':'-$')+Math.abs(v).toFixed(2);}
-function fmtStat(v,inf){if(inf)return inf==='+'?'Unlimited':'–∞';return fmt(v);}
 
 function mainDS(pays){
   return {data:pays,segment:{borderColor:ctx=>ctx.p1.parsed.y>=0?'#1D9E75':'#E24B4A'},
@@ -244,21 +267,17 @@ const STRATS=[
 
 {id:'long_call',cat:'Bullish',catCls:'cb-bull',title:'Long call',
  legs:[{side:'Buy',desc:'call at strike K'}],
- params:['S','K','T','V'],
- desc:'The most basic bullish position. You pay a premium for the right to buy 100 shares at the strike. Maximum loss is the premium paid, no matter how far the stock falls. Upside is theoretically unlimited.',
- insight:'Use when you expect a significant move up but want limited risk. Beware theta decay — the option loses time value every day.',
+ desc:'The most basic bullish position. You pay a premium for the right to buy shares at the strike. Maximum loss is the premium paid. Upside is theoretically unlimited.',
+ insight:'Use when you expect a significant move up but want limited risk. The further above the strike the stock moves, the more you earn.',
  render(el){
-   const def={S:100,K:100,T:3,V:25};
-   const defP=bsCall(def.S,def.K,def.T/12,def.V/100,0.04);
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',def.S],['Strike (K)',60,160,'k',def.K],['Months to expiry',1,24,'t',def.T],['Impl. vol %',5,80,'v',def.V],['Premium paid',1,30,'p',Math.round(defP)])+metricsHTML('pay','You pay upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'P&L at expiry'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike (K)',60,160,'k',100],['Premium paid',1,30,'p',7])+metricsHTML('pay','You pay upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'P&L at expiry'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K=gv(el,'k'),T=gv(el,'t')/12,V=gv(el,'v')/100,P=gv(el,'p');
-     const fair=bsCall(S,K,T,V,0.04);
+     const S=gv(el,'s'),K=gv(el,'k'),P=gv(el,'p');
      const px=prices();
      const pays=px.map(s=>Math.max(0,s-K)-P);
      const be=K+P;
-     setBanner('pay','You pay upfront','Fair value (BS): $'+fair.toFixed(2));
-     setMetrics({'m-prem':'-$'+P.toFixed(2),'m-maxp':'Unlimited','m-maxl':'-$'+P.toFixed(2),'m-be':'$'+be.toFixed(2),'m-view':'Bullish'});
+     setBanner('pay','You pay upfront','Max loss: $'+P+' · Breakeven: $'+be.toFixed(0));
+     setMetrics({'m-prem':'-$'+P,'m-maxp':'Unlimited','m-maxl':'-$'+P,'m-be':'$'+be.toFixed(0),'m-view':'Bullish'});
      makeChart('ch',px,[mainDS(pays)],[spotPlugin(S,50)]);
    });
  }
@@ -266,19 +285,17 @@ const STRATS=[
 
 {id:'long_put',cat:'Bearish',catCls:'cb-bear',title:'Long put',
  legs:[{side:'Buy',desc:'put at strike K'}],
- desc:'Gives you the right to sell at the strike. Profits when the stock falls below the strike by more than the premium paid. Maximum loss is the premium; maximum profit is the strike minus premium (stock can only go to zero).',
- insight:'Classic downside speculation or portfolio insurance. More time = more expensive, but slower decay early in the option\'s life.',
+ desc:'Gives you the right to sell at the strike. Profits when the stock falls below the strike by more than the premium paid. Maximum loss is the premium; maximum profit is the strike minus premium.',
+ insight:'Classic downside speculation or portfolio insurance. You profit if the stock falls hard enough to cover the cost of the put.',
  render(el){
-   const def={S:100,K:100,T:3,V:25};
-   const defP=bsPut(def.S,def.K,def.T/12,def.V/100,0.04);
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',def.S],['Strike (K)',60,160,'k',def.K],['Months to expiry',1,24,'t',def.T],['Impl. vol %',5,80,'v',def.V],['Premium paid',1,30,'p',Math.round(defP)])+metricsHTML('pay','You pay upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'P&L at expiry'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike (K)',60,160,'k',100],['Premium paid',1,30,'p',7])+metricsHTML('pay','You pay upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'P&L at expiry'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K=gv(el,'k'),T=gv(el,'t')/12,V=gv(el,'v')/100,P=gv(el,'p');
-     const fair=bsPut(S,K,T,V,0.04);
+     const S=gv(el,'s'),K=gv(el,'k'),P=gv(el,'p');
      const px=prices();
      const pays=px.map(s=>Math.max(0,K-s)-P);
-     setBanner('pay','You pay upfront','Fair value (BS): $'+fair.toFixed(2));
-     setMetrics({'m-prem':'-$'+P.toFixed(2),'m-maxp':'$'+(K-P).toFixed(2),'m-maxl':'-$'+P.toFixed(2),'m-be':'$'+(K-P).toFixed(2),'m-view':'Bearish'});
+     const be=K-P;
+     setBanner('pay','You pay upfront','Max loss: $'+P+' · Breakeven: $'+be.toFixed(0));
+     setMetrics({'m-prem':'-$'+P,'m-maxp':'$'+(K-P),'m-maxl':'-$'+P,'m-be':'$'+be.toFixed(0),'m-view':'Bearish'});
      makeChart('ch',px,[mainDS(pays)],[spotPlugin(S,50)]);
    });
  }
@@ -286,18 +303,17 @@ const STRATS=[
 
 {id:'short_call',cat:'Bearish / income',catCls:'cb-bear',title:'Short call (naked)',
  legs:[{side:'Sell',desc:'call at strike K'}],
- desc:'You collect the premium upfront. If the stock stays below the strike, you keep it all. If it rallies above, you have an obligation to sell shares at the strike — and losses are theoretically unlimited. High-risk position.',
+ desc:'You collect the premium upfront. If the stock stays below the strike, you keep it all. If it rallies above, you must sell at the strike — losses are theoretically unlimited.',
  insight:'Naked short calls require significant margin. Usually done only by experienced traders or replaced with a spread to define risk.',
  render(el){
-   const defP=bsCall(100,105,2/12,0.25,0.04);
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike (K)',60,160,'k',105],['Months to expiry',1,24,'t',2],['Impl. vol %',5,80,'v',25],['Premium received',1,30,'p',Math.max(1,Math.round(defP))])+metricsHTML('receive','You collect upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'P&L at expiry'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike (K)',60,160,'k',108],['Premium received',1,30,'p',6])+metricsHTML('receive','You collect upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'P&L at expiry'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K=gv(el,'k'),T=gv(el,'t')/12,V=gv(el,'v')/100,P=gv(el,'p');
-     const fair=bsCall(S,K,T,V,0.04);
+     const S=gv(el,'s'),K=gv(el,'k'),P=gv(el,'p');
      const px=prices();
      const pays=px.map(s=>P-Math.max(0,s-K));
-     setBanner('receive','You collect upfront','Fair value (BS): $'+fair.toFixed(2));
-     setMetrics({'m-prem':'+$'+P.toFixed(2),'m-maxp':'+$'+P.toFixed(2),'m-maxl':'Unlimited','m-be':'$'+(K+P).toFixed(2),'m-view':'Neutral / Bearish'});
+     const be=K+P;
+     setBanner('receive','You collect upfront','Max profit: $'+P+' · Breakeven: $'+be.toFixed(0));
+     setMetrics({'m-prem':'+$'+P,'m-maxp':'+$'+P,'m-maxl':'Unlimited','m-be':'$'+be.toFixed(0),'m-view':'Neutral / Bearish'});
      makeChart('ch',px,[mainDS(pays)],[spotPlugin(S,50)]);
    });
  }
@@ -305,18 +321,17 @@ const STRATS=[
 
 {id:'short_put',cat:'Bullish / income',catCls:'cb-income',title:'Short put (cash-secured)',
  legs:[{side:'Sell',desc:'put at strike K'}],
- desc:'Collect premium by selling a put. If the stock stays above the strike, you keep the premium. If it falls below, you are obligated to buy shares at the strike. "Cash-secured" means you hold cash to cover that purchase.',
+ desc:'Collect premium by selling a put. If the stock stays above the strike, you keep the premium. If it falls below, you are obligated to buy shares at the strike.',
  insight:'Effective way to get paid to buy a stock you already want to own at a discount. The strike you choose is the entry price you\'re comfortable with.',
  render(el){
-   const defP=bsPut(100,95,1/12,0.25,0.04);
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike (K)',60,160,'k',95],['Months to expiry',1,24,'t',1],['Impl. vol %',5,80,'v',25],['Premium received',1,30,'p',Math.max(1,Math.round(defP))])+metricsHTML('receive','You collect upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'P&L at expiry'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike (K)',60,160,'k',93],['Premium received',1,30,'p',5])+metricsHTML('receive','You collect upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'P&L at expiry'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K=gv(el,'k'),T=gv(el,'t')/12,V=gv(el,'v')/100,P=gv(el,'p');
-     const fair=bsPut(S,K,T,V,0.04);
+     const S=gv(el,'s'),K=gv(el,'k'),P=gv(el,'p');
      const px=prices();
      const pays=px.map(s=>P-Math.max(0,K-s));
-     setBanner('receive','You collect upfront','Fair value (BS): $'+fair.toFixed(2));
-     setMetrics({'m-prem':'+$'+P.toFixed(2),'m-maxp':'+$'+P.toFixed(2),'m-maxl':'-$'+(K-P).toFixed(2),'m-be':'$'+(K-P).toFixed(2),'m-view':'Neutral / Bullish'});
+     const be=K-P;
+     setBanner('receive','You collect upfront','Max profit: $'+P+' · Breakeven: $'+be.toFixed(0));
+     setMetrics({'m-prem':'+$'+P,'m-maxp':'+$'+P,'m-maxl':'-$'+(K-P),'m-be':'$'+be.toFixed(0),'m-view':'Neutral / Bullish'});
      makeChart('ch',px,[mainDS(pays)],[spotPlugin(S,50)]);
    });
  }
@@ -324,19 +339,18 @@ const STRATS=[
 
 {id:'bull_call',cat:'Bullish',catCls:'cb-bull',title:'Bull call spread',
  legs:[{side:'Buy',desc:'call at K₁ (lower)'},{side:'Sell',desc:'call at K₂ (higher)'}],
- desc:'Buy a call at a lower strike and sell one at a higher strike. The sold call reduces the premium cost but caps your maximum gain at K₂. You pay a net debit. Profits between the two strikes.',
+ desc:'Buy a call at a lower strike and sell one at a higher strike. The sold call reduces your cost but caps your maximum gain at K₂. You pay a net debit. Profits between the two strikes.',
  insight:'Cheaper than a naked call. Use when you\'re moderately bullish — you know roughly where the stock will go, not just "up forever".',
  render(el){
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Lower strike K₁',60,150,'k1',95],['Upper strike K₂',70,160,'k2',110],['Months to expiry',1,24,'t',2],['Impl. vol %',5,80,'v',25])+metricsHTML('pay','You pay net upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'},{c:'rgba(24,95,165,0.5)',l:'Long K₁ call'},{c:'rgba(153,60,29,0.5)',l:'Short K₂ call'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Lower strike K₁',60,150,'k1',95],['Upper strike K₂',70,160,'k2',110],['K₁ call premium paid',1,25,'p1',8],['K₂ call premium received',1,20,'p2',3])+metricsHTML('pay','You pay net debit upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'},{c:'rgba(24,95,165,0.5)',l:'Long K₁ call'},{c:'rgba(153,60,29,0.5)',l:'Short K₂ call'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),T=gv(el,'t')/12,V=gv(el,'v')/100;
-     const p1=bsCall(S,K1,T,V,0.04),p2=bsCall(S,K2,T,V,0.04);
+     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),p1=gv(el,'p1'),p2=gv(el,'p2');
      const net=p1-p2;
      const px=prices();
      const l1=px.map(s=>Math.max(0,s-K1)-p1);
      const l2=px.map(s=>p2-Math.max(0,s-K2));
      const comb=px.map(s=>Math.max(0,s-K1)-Math.max(0,s-K2)-net);
-     setBanner('pay','You pay net upfront','Buy K₁ call ($'+p1.toFixed(2)+') — sell K₂ call ($'+p2.toFixed(2)+') = net $'+net.toFixed(2));
+     setBanner('pay','You pay net debit upfront','Buy K₁ ($'+p1+') — sell K₂ ($'+p2+') = net $'+net.toFixed(2));
      setMetrics({'m-prem':'-$'+net.toFixed(2),'m-maxp':'$'+(K2-K1-net).toFixed(2),'m-maxl':'-$'+net.toFixed(2),'m-be':'$'+(K1+net).toFixed(2),'m-view':'Bullish (capped)'});
      makeChart('ch',px,[legDS(l1,'rgba(24,95,165,0.45)'),legDS(l2,'rgba(153,60,29,0.45)'),mainDS(comb)],[spotPlugin(S,50)]);
    });
@@ -345,19 +359,18 @@ const STRATS=[
 
 {id:'bear_put',cat:'Bearish',catCls:'cb-bear',title:'Bear put spread',
  legs:[{side:'Buy',desc:'put at K₂ (higher)'},{side:'Sell',desc:'put at K₁ (lower)'}],
- desc:'Buy a higher-strike put and sell a lower-strike put. The sold put offsets some premium cost and caps your maximum profit at K₁. Net debit trade. Profits when the stock falls between the two strikes.',
+ desc:'Buy a higher-strike put and sell a lower-strike put. The sold put offsets some premium cost and caps your maximum profit. Net debit trade. Profits when the stock falls between the two strikes.',
  insight:'Cheaper than a naked long put. Best when you expect a moderate decline to a specific level, not a crash to zero.',
  render(el){
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Lower strike K₁',60,140,'k1',85],['Upper strike K₂',70,150,'k2',100],['Months to expiry',1,24,'t',2],['Impl. vol %',5,80,'v',25])+metricsHTML('pay','You pay net upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'},{c:'rgba(24,95,165,0.5)',l:'Long K₂ put'},{c:'rgba(153,60,29,0.5)',l:'Short K₁ put'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Lower strike K₁',60,140,'k1',85],['Upper strike K₂',70,150,'k2',100],['K₂ put premium paid',1,25,'p2',10],['K₁ put premium received',1,20,'p1',4])+metricsHTML('pay','You pay net debit upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'},{c:'rgba(24,95,165,0.5)',l:'Long K₂ put'},{c:'rgba(153,60,29,0.5)',l:'Short K₁ put'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),T=gv(el,'t')/12,V=gv(el,'v')/100;
-     const p1=bsPut(S,K1,T,V,0.04),p2=bsPut(S,K2,T,V,0.04);
+     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),p1=gv(el,'p1'),p2=gv(el,'p2');
      const net=p2-p1;
      const px=prices();
      const l1=px.map(s=>Math.max(0,K2-s)-p2);
      const l2=px.map(s=>p1-Math.max(0,K1-s));
      const comb=px.map(s=>Math.max(0,K2-s)-Math.max(0,K1-s)-net);
-     setBanner('pay','You pay net upfront','Buy K₂ put ($'+p2.toFixed(2)+') — sell K₁ put ($'+p1.toFixed(2)+') = net $'+net.toFixed(2));
+     setBanner('pay','You pay net debit upfront','Buy K₂ put ($'+p2+') — sell K₁ put ($'+p1+') = net $'+net.toFixed(2));
      setMetrics({'m-prem':'-$'+net.toFixed(2),'m-maxp':'$'+(K2-K1-net).toFixed(2),'m-maxl':'-$'+net.toFixed(2),'m-be':'$'+(K2-net).toFixed(2),'m-view':'Bearish (capped)'});
      makeChart('ch',px,[legDS(l1,'rgba(24,95,165,0.45)'),legDS(l2,'rgba(153,60,29,0.45)'),mainDS(comb)],[spotPlugin(S,50)]);
    });
@@ -366,17 +379,16 @@ const STRATS=[
 
 {id:'bull_put',cat:'Bullish / income',catCls:'cb-income',title:'Bull put spread (credit)',
  legs:[{side:'Sell',desc:'put at K₂ (higher)'},{side:'Buy',desc:'put at K₁ (lower)'}],
- desc:'Sell a higher-strike put and buy a lower-strike put for protection. You collect a net credit. Maximum profit is the credit collected (stock stays above K₂). Maximum loss is the spread width minus the credit.',
+ desc:'Sell a higher-strike put and buy a lower-strike put for protection. You collect a net credit. Maximum profit is the credit (stock stays above K₂). Maximum loss is the spread width minus the credit.',
  insight:'Income-oriented bullish trade. You collect premium and keep it as long as the stock doesn\'t fall below your upper strike. Defined risk, unlike a naked short put.',
  render(el){
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Lower strike K₁ (protection)',60,140,'k1',88],['Upper strike K₂ (sold)',70,150,'k2',98],['Months to expiry',1,24,'t',1],['Impl. vol %',5,80,'v',25])+metricsHTML('receive','You collect upfront (credit)')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Lower strike K₁ (protection)',60,140,'k1',88],['Upper strike K₂ (sold)',70,150,'k2',98],['K₂ put premium received',1,20,'p2',7],['K₁ put premium paid',1,15,'p1',3])+metricsHTML('receive','You collect credit upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),T=gv(el,'t')/12,V=gv(el,'v')/100;
-     const p1=bsPut(S,K1,T,V,0.04),p2=bsPut(S,K2,T,V,0.04);
+     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),p1=gv(el,'p1'),p2=gv(el,'p2');
      const credit=p2-p1;
      const px=prices();
      const comb=px.map(s=>credit-Math.max(0,K2-s)+Math.max(0,K1-s));
-     setBanner('receive','You collect upfront (credit)','Sell K₂ put ($'+p2.toFixed(2)+') — buy K₁ put ($'+p1.toFixed(2)+') = credit $'+credit.toFixed(2));
+     setBanner('receive','You collect credit upfront','Sell K₂ put ($'+p2+') — buy K₁ put ($'+p1+') = credit $'+credit.toFixed(2));
      setMetrics({'m-prem':'+$'+credit.toFixed(2),'m-maxp':'+$'+credit.toFixed(2),'m-maxl':'-$'+(K2-K1-credit).toFixed(2),'m-be':'$'+(K2-credit).toFixed(2),'m-view':'Bullish (income)'});
      makeChart('ch',px,[mainDS(comb)],[spotPlugin(S,50)]);
    });
@@ -388,14 +400,13 @@ const STRATS=[
  desc:'Sell a lower-strike call and buy a higher-strike call for protection. You collect a net credit. Maximum profit is the credit (stock stays below K₁). Maximum loss is the spread width minus the credit.',
  insight:'Bearish income trade with defined risk. More conservative than a naked short call. Popular when you expect the stock to stagnate or fall slightly.',
  render(el){
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Lower strike K₁ (sold)',70,150,'k1',102],['Upper strike K₂ (protection)',80,160,'k2',115],['Months to expiry',1,24,'t',1],['Impl. vol %',5,80,'v',25])+metricsHTML('receive','You collect upfront (credit)')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Lower strike K₁ (sold)',70,150,'k1',105],['Upper strike K₂ (protection)',80,160,'k2',118],['K₁ call premium received',1,20,'p1',6],['K₂ call premium paid',1,15,'p2',2])+metricsHTML('receive','You collect credit upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),T=gv(el,'t')/12,V=gv(el,'v')/100;
-     const p1=bsCall(S,K1,T,V,0.04),p2=bsCall(S,K2,T,V,0.04);
+     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),p1=gv(el,'p1'),p2=gv(el,'p2');
      const credit=p1-p2;
      const px=prices();
      const comb=px.map(s=>credit-Math.max(0,s-K1)+Math.max(0,s-K2));
-     setBanner('receive','You collect upfront (credit)','Sell K₁ call ($'+p1.toFixed(2)+') — buy K₂ call ($'+p2.toFixed(2)+') = credit $'+credit.toFixed(2));
+     setBanner('receive','You collect credit upfront','Sell K₁ call ($'+p1+') — buy K₂ call ($'+p2+') = credit $'+credit.toFixed(2));
      setMetrics({'m-prem':'+$'+credit.toFixed(2),'m-maxp':'+$'+credit.toFixed(2),'m-maxl':'-$'+(K2-K1-credit).toFixed(2),'m-be':'$'+(K1+credit).toFixed(2),'m-view':'Bearish (income)'});
      makeChart('ch',px,[mainDS(comb)],[spotPlugin(S,50)]);
    });
@@ -404,20 +415,19 @@ const STRATS=[
 
 {id:'long_straddle',cat:'Volatility',catCls:'cb-vol',title:'Long straddle',
  legs:[{side:'Buy',desc:'call at K'},{side:'Buy',desc:'put at K'}],
- desc:'Buy a call and a put at the same strike and expiry. You pay two premiums and profit from a large move in either direction. Maximum loss is the total premium paid, which occurs if the stock is exactly at the strike at expiry.',
+ desc:'Buy a call and a put at the same strike and expiry. You pay two premiums and profit from a large move in either direction. Maximum loss is the total premium, which occurs if the stock is exactly at the strike at expiry.',
  insight:'The purest long-volatility bet. You don\'t care about direction — you just need the stock to move enough to cover both premiums. Often used ahead of binary events like earnings.',
  render(el){
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike (K)',60,160,'k',100],['Months to expiry',1,24,'t',2],['Impl. vol %',5,80,'v',25])+metricsHTML('pay','You pay total premium (both legs)')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'},{c:'rgba(24,95,165,0.4)',l:'Long call'},{c:'rgba(153,60,29,0.4)',l:'Long put'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike (K)',60,160,'k',100],['Call premium paid',1,20,'cp',7],['Put premium paid',1,20,'pp',7])+metricsHTML('pay','You pay total premium (both legs)')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'},{c:'rgba(24,95,165,0.4)',l:'Long call'},{c:'rgba(153,60,29,0.4)',l:'Long put'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K=gv(el,'k'),T=gv(el,'t')/12,V=gv(el,'v')/100;
-     const cp=bsCall(S,K,T,V,0.04),pp=bsPut(S,K,T,V,0.04);
+     const S=gv(el,'s'),K=gv(el,'k'),cp=gv(el,'cp'),pp=gv(el,'pp');
      const total=cp+pp;
      const px=prices();
      const lc=px.map(s=>Math.max(0,s-K)-cp);
      const lp=px.map(s=>Math.max(0,K-s)-pp);
      const comb=px.map(s=>Math.max(0,s-K)+Math.max(0,K-s)-total);
-     setBanner('pay','You pay total premium (both legs)','Call: $'+cp.toFixed(2)+' + Put: $'+pp.toFixed(2)+' = $'+total.toFixed(2)+' total');
-     setMetrics({'m-prem':'-$'+total.toFixed(2),'m-maxp':'Unlimited','m-maxl':'-$'+total.toFixed(2),'m-be':'$'+(K-total).toFixed(2)+' / $'+(K+total).toFixed(2),'m-view':'Long volatility'});
+     setBanner('pay','You pay total premium (both legs)','Call: $'+cp+' + Put: $'+pp+' = $'+total+' total');
+     setMetrics({'m-prem':'-$'+total,'m-maxp':'Unlimited','m-maxl':'-$'+total,'m-be':'$'+(K-total)+' / $'+(K+total),'m-view':'Long volatility'});
      makeChart('ch',px,[legDS(lc,'rgba(24,95,165,0.4)'),legDS(lp,'rgba(153,60,29,0.4)'),mainDS(comb)],[spotPlugin(S,50)]);
    });
  }
@@ -425,18 +435,17 @@ const STRATS=[
 
 {id:'short_straddle',cat:'Neutral',catCls:'cb-neutral',title:'Short straddle',
  legs:[{side:'Sell',desc:'call at K'},{side:'Sell',desc:'put at K'}],
- desc:'Sell a call and a put at the same strike. You collect two premiums but have unlimited risk on both sides. Profits when the stock stays close to the strike. This is the maximum-income, maximum-risk neutral strategy.',
- insight:'Only for experienced traders. You are short gamma and short vega — you need the stock to be still AND volatility to fall. A single large move can wipe out many months of premium income.',
+ desc:'Sell a call and a put at the same strike. You collect two premiums but have unlimited risk on both sides. Profits when the stock stays close to the strike.',
+ insight:'Only for experienced traders. You need the stock to stay near the strike. A single large move can wipe out many months of premium income.',
  render(el){
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike (K)',60,160,'k',100],['Months to expiry',1,24,'t',1],['Impl. vol %',5,80,'v',25])+metricsHTML('receive','You collect both premiums upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike (K)',60,160,'k',100],['Call premium received',1,20,'cp',7],['Put premium received',1,20,'pp',7])+metricsHTML('receive','You collect both premiums upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K=gv(el,'k'),T=gv(el,'t')/12,V=gv(el,'v')/100;
-     const cp=bsCall(S,K,T,V,0.04),pp=bsPut(S,K,T,V,0.04);
+     const S=gv(el,'s'),K=gv(el,'k'),cp=gv(el,'cp'),pp=gv(el,'pp');
      const total=cp+pp;
      const px=prices();
      const comb=px.map(s=>total-Math.max(0,s-K)-Math.max(0,K-s));
-     setBanner('receive','You collect both premiums upfront','Call: $'+cp.toFixed(2)+' + Put: $'+pp.toFixed(2)+' = $'+total.toFixed(2)+' total');
-     setMetrics({'m-prem':'+$'+total.toFixed(2),'m-maxp':'+$'+total.toFixed(2),'m-maxl':'Unlimited','m-be':'$'+(K-total).toFixed(2)+' / $'+(K+total).toFixed(2),'m-view':'Short volatility'});
+     setBanner('receive','You collect both premiums upfront','Call: $'+cp+' + Put: $'+pp+' = $'+total+' total');
+     setMetrics({'m-prem':'+$'+total,'m-maxp':'+$'+total,'m-maxl':'Unlimited','m-be':'$'+(K-total)+' / $'+(K+total),'m-view':'Short volatility'});
      makeChart('ch',px,[mainDS(comb)],[spotPlugin(S,50)]);
    });
  }
@@ -444,20 +453,19 @@ const STRATS=[
 
 {id:'long_strangle',cat:'Volatility',catCls:'cb-vol',title:'Long strangle',
  legs:[{side:'Buy',desc:'OTM put at K₁'},{side:'Buy',desc:'OTM call at K₂'}],
- desc:'Buy an OTM put and an OTM call at different strikes. Cheaper than a straddle because both options are out-of-the-money. Needs an even larger move to profit, but the cost is lower.',
+ desc:'Buy an OTM put and an OTM call at different strikes. Cheaper than a straddle because both options are out-of-the-money. Needs a larger move to profit, but the cost is lower.',
  insight:'Lower cost, larger move required. Good when you expect a big move but want to spend less premium. The stock must move outside both strikes to profit.',
  render(el){
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Put strike K₁ (OTM)',60,140,'k1',90],['Call strike K₂ (OTM)',70,160,'k2',110],['Months to expiry',1,24,'t',2],['Impl. vol %',5,80,'v',25])+metricsHTML('pay','You pay total premium (both OTM)')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'},{c:'rgba(24,95,165,0.4)',l:'Long call'},{c:'rgba(153,60,29,0.4)',l:'Long put'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Put strike K₁ (OTM)',60,140,'k1',90],['Call strike K₂ (OTM)',70,160,'k2',110],['OTM call premium paid',1,15,'cp',4],['OTM put premium paid',1,15,'pp',4])+metricsHTML('pay','You pay total premium (both OTM)')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'},{c:'rgba(24,95,165,0.4)',l:'Long call'},{c:'rgba(153,60,29,0.4)',l:'Long put'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),T=gv(el,'t')/12,V=gv(el,'v')/100;
-     const cp=bsCall(S,K2,T,V,0.04),pp=bsPut(S,K1,T,V,0.04);
+     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),cp=gv(el,'cp'),pp=gv(el,'pp');
      const total=cp+pp;
      const px=prices();
      const lc=px.map(s=>Math.max(0,s-K2)-cp);
      const lp=px.map(s=>Math.max(0,K1-s)-pp);
      const comb=px.map(s=>Math.max(0,s-K2)+Math.max(0,K1-s)-total);
-     setBanner('pay','You pay total premium (both OTM)','OTM call: $'+cp.toFixed(2)+' + OTM put: $'+pp.toFixed(2)+' = $'+total.toFixed(2));
-     setMetrics({'m-prem':'-$'+total.toFixed(2),'m-maxp':'Unlimited','m-maxl':'-$'+total.toFixed(2),'m-be':'$'+(K1-total).toFixed(2)+' / $'+(K2+total).toFixed(2),'m-view':'Long volatility'});
+     setBanner('pay','You pay total premium (both OTM)','OTM call: $'+cp+' + OTM put: $'+pp+' = $'+total);
+     setMetrics({'m-prem':'-$'+total,'m-maxp':'Unlimited','m-maxl':'-$'+total,'m-be':'$'+(K1-total)+' / $'+(K2+total),'m-view':'Long volatility'});
      makeChart('ch',px,[legDS(lc,'rgba(24,95,165,0.4)'),legDS(lp,'rgba(153,60,29,0.4)'),mainDS(comb)],[spotPlugin(S,50)]);
    });
  }
@@ -466,17 +474,16 @@ const STRATS=[
 {id:'short_strangle',cat:'Neutral',catCls:'cb-neutral',title:'Short strangle',
  legs:[{side:'Sell',desc:'OTM put at K₁'},{side:'Sell',desc:'OTM call at K₂'}],
  desc:'Sell an OTM put and OTM call at different strikes. Lower premium collected than a short straddle, but the stock has more room to move before you lose money. Still carries unlimited risk on both sides.',
- insight:'Most popular income strategy for professional option sellers. Wide breakevens give a cushion; IV crush after events is your friend. Used extensively by systematic vol-selling funds.',
+ insight:'Most popular income strategy for professional option sellers. Wide breakevens give a cushion — you keep the premium as long as the stock stays between the two strikes.',
  render(el){
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Put strike K₁ (OTM)',60,140,'k1',88],['Call strike K₂ (OTM)',70,160,'k2',112],['Months to expiry',1,24,'t',1],['Impl. vol %',5,80,'v',25])+metricsHTML('receive','You collect both OTM premiums upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Put strike K₁ (OTM)',60,140,'k1',88],['Call strike K₂ (OTM)',70,160,'k2',112],['OTM call premium received',1,15,'cp',4],['OTM put premium received',1,15,'pp',4])+metricsHTML('receive','You collect both OTM premiums upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),T=gv(el,'t')/12,V=gv(el,'v')/100;
-     const cp=bsCall(S,K2,T,V,0.04),pp=bsPut(S,K1,T,V,0.04);
+     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),cp=gv(el,'cp'),pp=gv(el,'pp');
      const total=cp+pp;
      const px=prices();
      const comb=px.map(s=>total-Math.max(0,s-K2)-Math.max(0,K1-s));
-     setBanner('receive','You collect both OTM premiums upfront','OTM call: $'+cp.toFixed(2)+' + OTM put: $'+pp.toFixed(2)+' = $'+total.toFixed(2));
-     setMetrics({'m-prem':'+$'+total.toFixed(2),'m-maxp':'+$'+total.toFixed(2),'m-maxl':'Unlimited','m-be':'$'+(K1-total).toFixed(2)+' / $'+(K2+total).toFixed(2),'m-view':'Short volatility'});
+     setBanner('receive','You collect both OTM premiums upfront','OTM call: $'+cp+' + OTM put: $'+pp+' = $'+total);
+     setMetrics({'m-prem':'+$'+total,'m-maxp':'+$'+total,'m-maxl':'Unlimited','m-be':'$'+(K1-total)+' / $'+(K2+total),'m-view':'Short volatility'});
      makeChart('ch',px,[mainDS(comb)],[spotPlugin(S,50)]);
    });
  }
@@ -484,24 +491,22 @@ const STRATS=[
 
 {id:'iron_condor',cat:'Neutral',catCls:'cb-neutral',title:'Iron condor',
  legs:[{side:'Buy',desc:'OTM put at K₁'},{side:'Sell',desc:'OTM put at K₂'},{side:'Sell',desc:'OTM call at K₃'},{side:'Buy',desc:'OTM call at K₄'}],
- desc:'Combines a bull put spread and a bear call spread. Four legs, net credit received. Profits when the stock stays between the two short strikes. Both sides have defined maximum loss — this is the most popular defined-risk neutral strategy.',
- insight:'You collect premium from selling the inner strikes and pay a smaller amount for the outer wings as protection. The flat profit zone in the middle is your target range.',
+ desc:'Combines a bull put spread and a bear call spread. Four legs, net credit received. Profits when the stock stays between the two short strikes. Both sides have defined maximum loss.',
+ insight:'The most popular defined-risk neutral strategy. You collect premium from selling the inner strikes and pay a smaller amount for the outer wings as protection.',
  render(el){
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['K₁ long put (wing)',60,130,'k1',85],['K₂ short put',70,140,'k2',93],['K₃ short call',70,150,'k3',107],['K₄ long call (wing)',80,160,'k4',115],['Months to expiry',1,24,'t',1],['Impl. vol %',5,80,'v',25])+metricsHTML('net','Upfront cost / credit')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['K₁ long put (wing)',60,130,'k1',85],['K₂ short put',70,140,'k2',93],['K₃ short call',70,150,'k3',107],['K₄ long call (wing)',80,160,'k4',115],['Bull put spread credit',1,15,'pc',4],['Bear call spread credit',1,15,'cc',4])+metricsHTML('receive','You collect net credit upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),K3=gv(el,'k3'),K4=gv(el,'k4'),T=gv(el,'t')/12,V=gv(el,'v')/100;
-     const p1=bsPut(S,K1,T,V,0.04),p2=bsPut(S,K2,T,V,0.04);
-     const c3=bsCall(S,K3,T,V,0.04),c4=bsCall(S,K4,T,V,0.04);
-     const credit=(p2-p1)+(c3-c4);
+     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),K3=gv(el,'k3'),K4=gv(el,'k4');
+     const pc=gv(el,'pc'),cc=gv(el,'cc'),credit=pc+cc;
      const px=prices();
      const comb=px.map(s=>{
-       const putSpread=Math.max(0,K1-s)-Math.max(0,K2-s);
-       const callSpread=Math.max(0,s-K4)-Math.max(0,s-K3);
-       return credit+putSpread+callSpread;
+       const putLeg=Math.max(0,K1-s)-Math.max(0,K2-s);
+       const callLeg=Math.max(0,s-K4)-Math.max(0,s-K3);
+       return credit+putLeg+callLeg;
      });
      const maxLoss=Math.max(K2-K1,K4-K3)-credit;
-     setBanner('receive','You collect net credit upfront','Put spread: $'+(p2-p1).toFixed(2)+' + Call spread: $'+(c3-c4).toFixed(2)+' = $'+credit.toFixed(2));
-     setMetrics({'m-prem':'+$'+credit.toFixed(2),'m-maxp':'+$'+credit.toFixed(2),'m-maxl':'-$'+maxLoss.toFixed(2),'m-be':'$'+(K2-credit).toFixed(1)+' / $'+(K3+credit).toFixed(1),'m-view':'Neutral (income)'});
+     setBanner('receive','You collect net credit upfront','Put spread credit: $'+pc+' + Call spread credit: $'+cc+' = $'+credit);
+     setMetrics({'m-prem':'+$'+credit,'m-maxp':'+$'+credit,'m-maxl':'-$'+maxLoss.toFixed(2),'m-be':'$'+(K2-credit).toFixed(1)+' / $'+(K3+credit).toFixed(1),'m-view':'Neutral (income)'});
      makeChart('ch',px,[mainDS(comb)],[spotPlugin(S,50)]);
    });
  }
@@ -509,22 +514,17 @@ const STRATS=[
 
 {id:'iron_butterfly',cat:'Neutral',catCls:'cb-neutral',title:'Iron butterfly',
  legs:[{side:'Buy',desc:'OTM put at K₁'},{side:'Sell',desc:'ATM put at K₂'},{side:'Sell',desc:'ATM call at K₂'},{side:'Buy',desc:'OTM call at K₃'}],
- desc:'Like an iron condor but with the two short options at the same strike (ATM). Higher premium collected, but the profit zone is a single point rather than a range. Defined risk on both sides.',
+ desc:'Like an iron condor but with the two short options at the same ATM strike. Higher premium collected, but the profit zone is a single point rather than a range. Defined risk on both sides.',
  insight:'Higher potential profit than a condor but narrower sweet spot. Use when you have a precise price target and high implied volatility makes the premium attractive.',
  render(el){
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Lower wing K₁',60,140,'k1',87],['Middle strike K₂ (ATM)',70,150,'k2',100],['Upper wing K₃',80,160,'k3',113],['Months to expiry',1,24,'t',1],['Impl. vol %',5,80,'v',28])+metricsHTML('net','Upfront cost / credit')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Lower wing K₁',60,140,'k1',87],['Middle strike K₂ (ATM)',70,150,'k2',100],['Upper wing K₃',80,160,'k3',113],['Total credit received',2,25,'credit',12])+metricsHTML('receive','You collect credit upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),K3=gv(el,'k3'),T=gv(el,'t')/12,V=gv(el,'v')/100;
-     const p1=bsPut(S,K1,T,V,0.04),p2=bsPut(S,K2,T,V,0.04);
-     const c2=bsCall(S,K2,T,V,0.04),c3=bsCall(S,K3,T,V,0.04);
-     const credit=(p2-p1)+(c2-c3);
+     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),K3=gv(el,'k3'),credit=gv(el,'credit');
      const px=prices();
-     const comb=px.map(s=>{
-       return credit-(Math.max(0,K2-s)-Math.max(0,K1-s))-(Math.max(0,s-K2)-Math.max(0,s-K3));
-     });
+     const comb=px.map(s=>credit-(Math.max(0,K2-s)-Math.max(0,K1-s))-(Math.max(0,s-K2)-Math.max(0,s-K3)));
      const maxLoss=Math.max(K2-K1,K3-K2)-credit;
-     setBanner('receive','You collect credit upfront (higher than condor)','ATM put+call minus wings = $'+credit.toFixed(2));
-     setMetrics({'m-prem':'+$'+credit.toFixed(2),'m-maxp':'+$'+credit.toFixed(2),'m-maxl':'-$'+maxLoss.toFixed(2),'m-be':'$'+(K2-credit).toFixed(1)+' / $'+(K2+credit).toFixed(1),'m-view':'Neutral (precise)'});
+     setBanner('receive','You collect credit upfront','ATM put + ATM call sold, wings bought — net credit $'+credit);
+     setMetrics({'m-prem':'+$'+credit,'m-maxp':'+$'+credit,'m-maxl':'-$'+maxLoss.toFixed(2),'m-be':'$'+(K2-credit)+' / $'+(K2+credit),'m-view':'Neutral (precise)'});
      makeChart('ch',px,[mainDS(comb)],[spotPlugin(S,50)]);
    });
  }
@@ -533,17 +533,15 @@ const STRATS=[
 {id:'butterfly',cat:'Neutral',catCls:'cb-neutral',title:'Long butterfly (calls)',
  legs:[{side:'Buy',desc:'call at K₁'},{side:'Sell',desc:'2× call at K₂'},{side:'Buy',desc:'call at K₃'}],
  desc:'Buy one low-strike call, sell two middle-strike calls, buy one high-strike call. Net debit trade. Maximum profit if the stock lands exactly at the middle strike at expiry. Both maximum profit and loss are defined.',
- insight:'Very cheap trade with a high reward-to-risk ratio at the precise target price. Popular when the stock is expected to pin near a specific level — often used around earnings expecting a muted reaction.',
+ insight:'Very cheap trade with a high reward-to-risk ratio at the precise target price. Popular when the stock is expected to pin near a specific level — often around earnings.',
  render(el){
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Lower strike K₁',60,140,'k1',90],['Middle strike K₂',70,150,'k2',100],['Upper strike K₃',80,160,'k3',110],['Months to expiry',1,24,'t',1],['Impl. vol %',5,80,'v',25])+metricsHTML('net','Upfront cost / credit')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'},{c:'rgba(83,74,183,0.4)',l:'Individual legs'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Lower strike K₁',60,140,'k1',90],['Middle strike K₂',70,150,'k2',100],['Upper strike K₃',80,160,'k3',110],['Net debit paid',1,15,'net',3])+metricsHTML('pay','You pay small net debit upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),K3=gv(el,'k3'),T=gv(el,'t')/12,V=gv(el,'v')/100;
-     const p1=bsCall(S,K1,T,V,0.04),p2=bsCall(S,K2,T,V,0.04),p3=bsCall(S,K3,T,V,0.04);
-     const net=p1-2*p2+p3;
+     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),K3=gv(el,'k3'),net=gv(el,'net');
      const px=prices();
      const comb=px.map(s=>Math.max(0,s-K1)-2*Math.max(0,s-K2)+Math.max(0,s-K3)-net);
-     setBanner('pay','You pay small net debit upfront','Buy K₁+K₃ calls, sell 2× K₂ call — net $'+net.toFixed(2));
-     setMetrics({'m-prem':'-$'+net.toFixed(2),'m-maxp':'$'+(K2-K1-net).toFixed(2),'m-maxl':'-$'+net.toFixed(2),'m-be':'$'+(K1+net).toFixed(2)+' / $'+(K3-net).toFixed(2),'m-view':'Neutral (precise)'});
+     setBanner('pay','You pay small net debit upfront','Buy K₁+K₃ calls, sell 2× K₂ call — net $'+net);
+     setMetrics({'m-prem':'-$'+net,'m-maxp':'$'+(K2-K1-net),'m-maxl':'-$'+net,'m-be':'$'+(K1+net)+' / $'+(K3-net),'m-view':'Neutral (precise)'});
      makeChart('ch',px,[mainDS(comb)],[spotPlugin(S,50)]);
    });
  }
@@ -554,15 +552,13 @@ const STRATS=[
  desc:'Like a butterfly but the two middle strikes are spread apart, creating a flat profit zone between K₂ and K₃. Slightly more expensive than a butterfly, but you don\'t need an exact price target — just a range.',
  insight:'Wider tent, lower peak profit. More forgiving than a butterfly. Choose K₂ and K₃ around the range you think the stock will trade in at expiry.',
  render(el){
-   el.innerHTML=controls(['Stock price (S)',60,170,'s',100],['K₁ (buy)',60,130,'k1',88],['K₂ (sell)',65,140,'k2',95],['K₃ (sell)',75,155,'k3',108],['K₄ (buy)',80,170,'k4',115],['Months to expiry',1,24,'t',1],['Impl. vol %',5,80,'v',25])+metricsHTML('net','Upfront cost / credit')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
+   el.innerHTML=controls(['Stock price (S)',60,170,'s',100],['K₁ (buy)',60,130,'k1',88],['K₂ (sell)',65,140,'k2',95],['K₃ (sell)',75,155,'k3',108],['K₄ (buy)',80,170,'k4',115],['Net debit paid',1,15,'net',4])+metricsHTML('pay','You pay small net debit upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),K3=gv(el,'k3'),K4=gv(el,'k4'),T=gv(el,'t')/12,V=gv(el,'v')/100;
-     const p1=bsCall(S,K1,T,V,0.04),p2=bsCall(S,K2,T,V,0.04),p3=bsCall(S,K3,T,V,0.04),p4=bsCall(S,K4,T,V,0.04);
-     const net=p1-p2-p3+p4;
+     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),K3=gv(el,'k3'),K4=gv(el,'k4'),net=gv(el,'net');
      const px=prices();
      const comb=px.map(s=>Math.max(0,s-K1)-Math.max(0,s-K2)-Math.max(0,s-K3)+Math.max(0,s-K4)-net);
-     setBanner('pay','You pay small net debit upfront','Buy K₁+K₄ calls, sell K₂+K₃ calls — net $'+net.toFixed(2));
-     setMetrics({'m-prem':'-$'+net.toFixed(2),'m-maxp':'$'+(K2-K1-net).toFixed(2),'m-maxl':'-$'+net.toFixed(2),'m-be':'$'+(K1+net).toFixed(1)+' / $'+(K4-net).toFixed(1),'m-view':'Neutral (range)'});
+     setBanner('pay','You pay small net debit upfront','Buy K₁+K₄ calls, sell K₂+K₃ calls — net $'+net);
+     setMetrics({'m-prem':'-$'+net,'m-maxp':'$'+(K2-K1-net).toFixed(2),'m-maxl':'-$'+net,'m-be':'$'+(K1+net)+' / $'+(K4-net),'m-view':'Neutral (range)'});
      makeChart('ch',px,[mainDS(comb)],[spotPlugin(S,50)]);
    });
  }
@@ -571,18 +567,16 @@ const STRATS=[
 {id:'covered_call',cat:'Income / hedge',catCls:'cb-hedge',title:'Covered call',
  legs:[{side:'Own',desc:'100 shares'},{side:'Sell',desc:'call at K'}],
  desc:'Own the underlying stock and sell a call against it. You collect premium income but cap your upside at the strike price. If the stock is called away, you sell at the strike plus premium received.',
- insight:'The most popular options strategy. Turns a flat or mildly bullish stock position into an income machine. Works best in sideways markets. You\'re essentially getting paid to set a limit sell order.',
+ insight:'The most popular options strategy. Turns a flat or mildly bullish stock position into an income machine. Works best in sideways markets.',
  render(el){
-   const defP=bsCall(100,110,1/12,0.25,0.04);
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike K (call sold)',70,160,'k',110],['Months to expiry',1,24,'t',1],['Impl. vol %',5,80,'v',25],['Premium received (call)',1,20,'p',Math.max(1,Math.round(defP))])+metricsHTML('receive','You collect selling the call')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Covered call P&L'},{c:'rgba(136,135,128,0.5)',l:'Stock only'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike K (call sold)',70,160,'k',110],['Premium received (call)',1,20,'p',4])+metricsHTML('receive','You collect selling the call')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Covered call P&L'},{c:'rgba(136,135,128,0.5)',l:'Stock only'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K=gv(el,'k'),T=gv(el,'t')/12,V=gv(el,'v')/100,P=gv(el,'p');
-     const fair=bsCall(S,K,T,V,0.04);
+     const S=gv(el,'s'),K=gv(el,'k'),P=gv(el,'p');
      const px=prices();
      const strat=px.map(s=>(s-S)+P-Math.max(0,s-K));
      const stk=px.map(s=>s-S);
-     setBanner('receive','You collect selling the call','Fair value (BS): $'+fair.toFixed(2)+' — this reduces your breakeven');
-     setMetrics({'m-prem':'+$'+P.toFixed(2),'m-maxp':'$'+(K-S+P).toFixed(2),'m-maxl':'-$'+(S-P).toFixed(2),'m-be':'$'+(S-P).toFixed(2),'m-view':'Neutral / Bullish'});
+     setBanner('receive','You collect selling the call','Reduces breakeven to $'+(S-P)+' · Upside capped at $'+(K-S+P)+' profit');
+     setMetrics({'m-prem':'+$'+P,'m-maxp':'$'+(K-S+P),'m-maxl':'-$'+(S-P),'m-be':'$'+(S-P),'m-view':'Neutral / Bullish'});
      makeChart('ch',px,[legDS(stk,'rgba(136,135,128,0.45)'),mainDS(strat)],[spotPlugin(S,50)]);
    });
  }
@@ -590,19 +584,17 @@ const STRATS=[
 
 {id:'protective_put',cat:'Income / hedge',catCls:'cb-hedge',title:'Protective put',
  legs:[{side:'Own',desc:'100 shares'},{side:'Buy',desc:'put at K'}],
- desc:'Own the underlying stock and buy a put as insurance. If the stock crashes below the strike, you can sell at the strike price. Your downside is capped at (S − K + premium). The stock still participates in any upside.',
- insight:'Portfolio insurance. The put is the deductible — you pay the premium and accept losses down to the strike, but anything below the strike is covered. A collar adds a short call to offset the put premium.',
+ desc:'Own the underlying stock and buy a put as insurance. If the stock crashes below the strike, you can sell at the strike price. Your downside is capped; the stock still participates in any upside.',
+ insight:'Portfolio insurance. The put is the deductible — you pay the premium and accept losses down to the strike, but anything below the strike is covered.',
  render(el){
-   const defPP=bsPut(100,93,3/12,0.25,0.04);
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike K (put bought)',60,140,'k',93],['Months to expiry',1,24,'t',3],['Impl. vol %',5,80,'v',25],['Premium paid (put)',1,20,'p',Math.max(1,Math.round(defPP))])+metricsHTML('pay','You pay for insurance')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Protected P&L'},{c:'rgba(136,135,128,0.5)',l:'Stock only'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike K (put bought)',60,140,'k',93],['Premium paid (put)',1,20,'p',4])+metricsHTML('pay','You pay for insurance')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Protected P&L'},{c:'rgba(136,135,128,0.5)',l:'Stock only'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K=gv(el,'k'),T=gv(el,'t')/12,V=gv(el,'v')/100,P=gv(el,'p');
-     const fair=bsPut(S,K,T,V,0.04);
+     const S=gv(el,'s'),K=gv(el,'k'),P=gv(el,'p');
      const px=prices();
      const strat=px.map(s=>(s-S)-P+Math.max(0,K-s));
      const stk=px.map(s=>s-S);
-     setBanner('pay','You pay for insurance','Fair value (BS): $'+fair.toFixed(2)+' — limits max loss below $'+K);
-     setMetrics({'m-prem':'-$'+P.toFixed(2),'m-maxp':'Unlimited','m-maxl':'-$'+(S-K+P).toFixed(2),'m-be':'$'+(S+P).toFixed(2),'m-view':'Bullish + protected'});
+     setBanner('pay','You pay for insurance','Max loss limited to $'+(S-K+P)+' · Upside unlimited above $'+(S+P));
+     setMetrics({'m-prem':'-$'+P,'m-maxp':'Unlimited','m-maxl':'-$'+(S-K+P),'m-be':'$'+(S+P),'m-view':'Bullish + protected'});
      makeChart('ch',px,[legDS(stk,'rgba(136,135,128,0.45)'),mainDS(strat)],[spotPlugin(S,50)]);
    });
  }
@@ -610,23 +602,20 @@ const STRATS=[
 
 {id:'collar',cat:'Income / hedge',catCls:'cb-hedge',title:'Collar',
  legs:[{side:'Own',desc:'100 shares'},{side:'Buy',desc:'OTM put at K₁'},{side:'Sell',desc:'OTM call at K₂'}],
- desc:'Own shares, buy a protective put, and sell a call to offset the put premium. The result: your downside is capped at the put strike and your upside is capped at the call strike. Often near zero-cost.',
- insight:'Classic corporate hedging structure — executives use collars to protect large stock grants. You trade upside for downside protection, often at near-zero net premium.',
+ desc:'Own shares, buy a protective put, and sell a call to offset the put premium. Your downside is capped at the put strike and your upside is capped at the call strike. Often near zero-cost.',
+ insight:'Classic corporate hedging structure. You trade upside for downside protection, often at near-zero net premium.',
  render(el){
-   const defPut=bsPut(100,90,3/12,0.25,0.04),defCall=bsCall(100,112,3/12,0.25,0.04);
-   const defNet=defPut-defCall;
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Put strike K₁ (floor)',60,140,'k1',90],['Call strike K₂ (cap)',70,160,'k2',112],['Months to expiry',1,24,'t',3],['Impl. vol %',5,80,'v',25],['Put premium paid',1,20,'pp',Math.max(1,Math.round(defPut))],['Call premium received',1,15,'pc',Math.max(1,Math.round(defCall))])+metricsHTML('net','Net upfront cost')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Collar P&L'},{c:'rgba(136,135,128,0.5)',l:'Stock only'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Put strike K₁ (floor)',60,140,'k1',90],['Call strike K₂ (cap)',70,160,'k2',112],['Put premium paid',1,15,'pp',4],['Call premium received',1,15,'pc',4])+metricsHTML('net','Net upfront cost')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Collar P&L'},{c:'rgba(136,135,128,0.5)',l:'Stock only'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),T=gv(el,'t')/12,V=gv(el,'v')/100;
-     const PP=gv(el,'pp'),PC=gv(el,'pc'),net=PP-PC;
-     const fairPut=bsPut(S,K1,T,V,0.04),fairCall=bsCall(S,K2,T,V,0.04);
+     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),PP=gv(el,'pp'),PC=gv(el,'pc');
+     const net=PP-PC;
      const px=prices();
      const strat=px.map(s=>(s-S)-net+Math.max(0,K1-s)-Math.max(0,s-K2));
      const stk=px.map(s=>s-S);
      const bannerType=net>0.5?'pay':net<-0.5?'receive':'net';
      const bannerLbl=net>0.5?'You pay net upfront':net<-0.5?'You collect net upfront':'Near zero-cost collar';
-     setBanner(bannerType,bannerLbl,'Put BS: $'+fairPut.toFixed(2)+' | Call BS: $'+fairCall.toFixed(2));
-     setMetrics({'m-prem':(net>=0?'-$':'+$')+Math.abs(net).toFixed(2),'m-maxp':'$'+(K2-S-net).toFixed(2),'m-maxl':'-$'+(S-K1+net).toFixed(2),'m-be':'$'+(S+net).toFixed(2),'m-view':'Hedged bullish'});
+     setBanner(bannerType,bannerLbl,'Put: $'+PP+' · Call: $'+PC+' · Net: '+(net>=0?'$':'-$')+Math.abs(net));
+     setMetrics({'m-prem':(net>=0?'-$':'+$')+Math.abs(net),'m-maxp':'$'+(K2-S-net).toFixed(2),'m-maxl':'-$'+(S-K1+net).toFixed(2),'m-be':'$'+(S+net),'m-view':'Hedged bullish'});
      makeChart('ch',px,[legDS(stk,'rgba(136,135,128,0.45)'),mainDS(strat)],[spotPlugin(S,50)]);
    });
  }
@@ -634,20 +623,19 @@ const STRATS=[
 
 {id:'synth_long',cat:'Synthetic',catCls:'cb-synth',title:'Synthetic long stock',
  legs:[{side:'Buy',desc:'call at K'},{side:'Sell',desc:'put at K'}],
- desc:'Buy a call and sell a put at the same strike and expiry. This exactly replicates owning the stock (by put-call parity) but doesn\'t require holding shares. P&L is essentially identical to stock ownership beyond the strike.',
- insight:'Use when you want stock-like exposure without the capital outlay. Common in futures markets. Beware: the short put means you can lose as much as owning the stock.',
+ desc:'Buy a call and sell a put at the same strike and expiry. This replicates owning the stock (by put-call parity) but doesn\'t require holding shares. P&L is essentially identical to stock ownership.',
+ insight:'Use when you want stock-like exposure without the capital outlay. Beware: the short put means you can lose as much as owning the stock.',
  render(el){
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike (K)',60,160,'k',100],['Months to expiry',1,24,'t',3],['Impl. vol %',5,80,'v',25])+metricsHTML('net','Upfront cost / credit')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Synthetic long'},{c:'rgba(136,135,128,0.5)',l:'Stock only'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike (K)',60,160,'k',100],['Call premium paid',1,20,'cp',7],['Put premium received',1,20,'pp',7])+metricsHTML('net','Net upfront cost')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Synthetic long'},{c:'rgba(136,135,128,0.5)',l:'Stock only'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K=gv(el,'k'),T=gv(el,'t')/12,V=gv(el,'v')/100;
-     const cp=bsCall(S,K,T,V,0.04),pp=bsPut(S,K,T,V,0.04);
+     const S=gv(el,'s'),K=gv(el,'k'),cp=gv(el,'cp'),pp=gv(el,'pp');
      const net=cp-pp;
      const px=prices();
      const strat=px.map(s=>Math.max(0,s-K)-Math.max(0,K-s)-net);
      const stk=px.map(s=>s-S);
      const bt=net>0.5?'pay':net<-0.5?'receive':'net';
-     setBanner(bt,net>0.5?'You pay net upfront':net<-0.5?'You collect net upfront':'Near zero-cost entry','Buy call ($'+cp.toFixed(2)+') — sell put ($'+pp.toFixed(2)+') = net $'+net.toFixed(2));
-     setMetrics({'m-prem':(net>=0?'-$':'+$')+Math.abs(net).toFixed(2),'m-maxp':'Unlimited','m-maxl':'Unlimited (down)','m-be':'$'+(K+net).toFixed(2),'m-view':'Synthetic long'});
+     setBanner(bt,net>0.5?'You pay net upfront':net<-0.5?'You collect net upfront':'Near zero-cost entry','Buy call ($'+cp+') — sell put ($'+pp+') = net '+(net>=0?'$':'-$')+Math.abs(net));
+     setMetrics({'m-prem':(net>=0?'-$':'+$')+Math.abs(net),'m-maxp':'Unlimited','m-maxl':'Unlimited (down)','m-be':'$'+(K+net),'m-view':'Synthetic long'});
      makeChart('ch',px,[legDS(stk,'rgba(136,135,128,0.45)'),mainDS(strat)],[spotPlugin(S,50)]);
    });
  }
@@ -656,18 +644,17 @@ const STRATS=[
 {id:'ratio_spread',cat:'Advanced',catCls:'cb-vol',title:'Ratio call spread',
  legs:[{side:'Buy',desc:'1× call at K₁'},{side:'Sell',desc:'2× calls at K₂'}],
  desc:'Buy one call at a lower strike and sell two calls at a higher strike. Results in a credit or near zero cost. Profits from a moderate rally to K₂. Above K₂ the two short calls begin to dominate and losses grow unboundedly.',
- insight:'Popular for getting into a position for free (or a credit) with a moderate bullish view. Risk is the uncapped short above the upper strike. Often used when IV is elevated and you\'re comfortable with the risk.',
+ insight:'Popular for entering a position for free (or a credit) with a moderate bullish view. Risk is uncapped above the upper strike.',
  render(el){
-   el.innerHTML=controls(['Stock price (S)',60,170,'s',100],['Lower strike K₁ (buy 1)',60,150,'k1',100],['Upper strike K₂ (sell 2)',70,170,'k2',115],['Months to expiry',1,24,'t',2],['Impl. vol %',5,80,'v',28])+metricsHTML('net','Upfront cost / credit')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
+   el.innerHTML=controls(['Stock price (S)',60,170,'s',100],['Lower strike K₁ (buy 1)',60,150,'k1',100],['Upper strike K₂ (sell 2)',70,170,'k2',115],['K₁ call premium paid',1,20,'p1',9],['K₂ call premium received (each)',1,15,'p2',5])+metricsHTML('net','Upfront cost / credit')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),T=gv(el,'t')/12,V=gv(el,'v')/100;
-     const p1=bsCall(S,K1,T,V,0.04),p2=bsCall(S,K2,T,V,0.04);
+     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),p1=gv(el,'p1'),p2=gv(el,'p2');
      const net=p1-2*p2;
      const px=prices();
      const comb=px.map(s=>Math.max(0,s-K1)-2*Math.max(0,s-K2)-net);
      const maxP=Math.max(0,K2-K1-net);
      const bt=net<-0.3?'receive':net>0.3?'pay':'net';
-     setBanner(bt,net<-0.3?'You collect credit upfront':net>0.3?'You pay net upfront':'Near zero-cost entry','Buy 1 K₁ call ($'+p1.toFixed(2)+') — sell 2 K₂ calls ($'+(2*p2).toFixed(2)+') = net $'+net.toFixed(2));
+     setBanner(bt,net<-0.3?'You collect credit upfront':net>0.3?'You pay net upfront':'Near zero-cost entry','Buy 1 K₁ call ($'+p1+') — sell 2 K₂ calls ($'+(2*p2)+') = net '+(net>=0?'$':'-$')+Math.abs(net).toFixed(2));
      setMetrics({'m-prem':(net<=0?'+$':'-$')+Math.abs(net).toFixed(2),'m-maxp':'$'+maxP.toFixed(2)+' @ $'+K2,'m-maxl':'Unlimited above K₂','m-be':net<=0?'$'+K1:'$'+(K1+net).toFixed(2)+' / above K₂','m-view':'Bullish (leveraged)'});
      makeChart('ch',px,[mainDS(comb)],[spotPlugin(S,50)]);
    });
@@ -677,17 +664,16 @@ const STRATS=[
 {id:'backspread',cat:'Advanced',catCls:'cb-vol',title:'Call backspread',
  legs:[{side:'Sell',desc:'1× call at K₁'},{side:'Buy',desc:'2× calls at K₂'}],
  desc:'Sell one call at a lower strike and buy two calls at a higher strike. Mirror of the ratio spread. Usually done for a credit or small debit. Profits if the stock makes a very large upward move. Limited loss in the middle zone.',
- insight:'Long-volatility, long-gamma strategy at zero or negative cost. Benefits from a big breakout but has a "dead zone" between the strikes where you lose. Popular when expecting a breakout but unsure of timing.',
+ insight:'Long-volatility, long-gamma strategy at zero or negative cost. Benefits from a big breakout but has a "dead zone" between the strikes where you lose.',
  render(el){
-   el.innerHTML=controls(['Stock price (S)',60,180,'s',100],['Lower strike K₁ (sell 1)',60,150,'k1',100],['Upper strike K₂ (buy 2)',70,180,'k2',115],['Months to expiry',1,24,'t',3],['Impl. vol %',5,80,'v',25])+metricsHTML('net','Upfront cost / credit')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
+   el.innerHTML=controls(['Stock price (S)',60,180,'s',100],['Lower strike K₁ (sell 1)',60,150,'k1',100],['Upper strike K₂ (buy 2)',70,180,'k2',115],['K₁ call premium received',1,20,'p1',9],['K₂ call premium paid (each)',1,15,'p2',4])+metricsHTML('net','Upfront cost / credit')+chartHTML()+legendHTML([{c:'#1D9E75',l:'Combined P&L'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),T=gv(el,'t')/12,V=gv(el,'v')/100;
-     const p1=bsCall(S,K1,T,V,0.04),p2=bsCall(S,K2,T,V,0.04);
+     const S=gv(el,'s'),K1=gv(el,'k1'),K2=gv(el,'k2'),p1=gv(el,'p1'),p2=gv(el,'p2');
      const net=2*p2-p1;
      const px=prices(50,200);
      const comb=px.map(s=>2*Math.max(0,s-K2)-Math.max(0,s-K1)-net);
      const bt=net<-0.3?'pay':net>0.3?'receive':'net';
-     setBanner(bt,net<-0.3?'You pay net upfront':net>0.3?'You collect credit upfront':'Near zero-cost entry','Sell 1 K₁ call ($'+p1.toFixed(2)+') — buy 2 K₂ calls ($'+(2*p2).toFixed(2)+') = net $'+net.toFixed(2));
+     setBanner(bt,net<-0.3?'You pay net upfront':net>0.3?'You collect credit upfront':'Near zero-cost entry','Sell 1 K₁ call ($'+p1+') — buy 2 K₂ calls ($'+(2*p2)+') = net '+(net>=0?'-$':'+')+Math.abs(net).toFixed(2));
      setMetrics({'m-prem':(net>=0?'-$':'+$')+Math.abs(net).toFixed(2),'m-maxp':'Unlimited','m-maxl':'-$'+(K2-K1-net).toFixed(2),'m-be':'above ~$'+(2*K2-K1).toFixed(0),'m-view':'Long vol / breakout'});
      makeChart('ch',px,[mainDS(comb)],[spotPlugin(S,50)]);
    });
@@ -697,22 +683,24 @@ const STRATS=[
 {id:'calendar',cat:'Advanced',catCls:'cb-vol',title:'Calendar spread',
  legs:[{side:'Sell',desc:'near-term option at K'},{side:'Buy',desc:'far-term option at K'}],
  desc:'Sell a short-dated option and buy a longer-dated option at the same strike. You profit from the near-term option decaying faster than the far-term one. Maximum profit occurs if the stock is at the strike when the front month expires.',
- insight:'A pure theta trade. Near-term options decay faster — you harvest that difference. IV sensitivity (vega) also differs: short the fast-decaying front, long the slower-decaying back.',
+ insight:'A pure theta trade. Near-term options decay faster — you harvest that differential. The position peaks when the stock sits at the strike on the front expiry date.',
  render(el){
-   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike (K)',60,160,'k',100],['Near expiry (months)',1,12,'t1',1],['Far expiry (months)',2,24,'t2',4],['Impl. vol %',5,80,'v',25])+metricsHTML('net','Upfront cost / credit')+chartHTML()+legendHTML([{c:'#1D9E75',l:'P&L at front expiry'},{c:'rgba(136,135,128,0.5)',l:'Stock only'}]);
+   el.innerHTML=controls(['Stock price (S)',60,160,'s',100],['Strike (K)',60,160,'k',100],['Near expiry (months)',1,12,'t1',1],['Far expiry (months)',2,24,'t2',4],['Near call premium (sold)',1,15,'pnear',5],['Far call premium (bought)',2,25,'pfar',12])+metricsHTML('pay','You pay net debit upfront')+chartHTML()+legendHTML([{c:'#1D9E75',l:'P&L at front expiry'},{c:'rgba(136,135,128,0.4)',l:'Stock only'}]);
    bind(el,()=>{
-     const S=gv(el,'s'),K=gv(el,'k'),T1=gv(el,'t1')/12,T2=gv(el,'t2')/12,V=gv(el,'v')/100;
-     const near=bsCall(S,K,T1,V,0.04),far=bsCall(S,K,T2,V,0.04);
-     const net=far-near;
+     const S=gv(el,'s'),K=gv(el,'k'),T1=gv(el,'t1')/12,T2=gv(el,'t2')/12;
+     const pnear=gv(el,'pnear'),pfar=gv(el,'pfar');
+     const net=pfar-pnear;
      const px=prices();
+     // At front expiry: near expires at intrinsic; estimate far value using BS with fixed vol=0.25
      const pnl=px.map(s=>{
        const nearExp=Math.max(0,s-K);
-       const farRemain=bsCall(s,K,T2-T1,V,0.04);
+       const farRemain=bsCall(s,K,T2-T1,0.25,0.04);
        return farRemain-nearExp-net;
      });
-     setBanner('pay','You pay net debit upfront','Buy far call ($'+far.toFixed(2)+') — sell near call ($'+near.toFixed(2)+') = $'+net.toFixed(2));
+     const stk=px.map(s=>s-S);
+     setBanner('pay','You pay net debit upfront','Buy far call ($'+pfar+') — sell near call ($'+pnear+') = $'+net.toFixed(2));
      setMetrics({'m-prem':'-$'+net.toFixed(2),'m-maxp':'Max near K=$'+K,'m-maxl':'-$'+net.toFixed(2),'m-be':'Near K at front expiry','m-view':'Neutral (theta play)'});
-     makeChart('ch',px,[mainDS(pnl)],[spotPlugin(S,50)]);
+     makeChart('ch',px,[legDS(stk,'rgba(136,135,128,0.4)'),mainDS(pnl)],[spotPlugin(S,50)]);
    });
  }
 },
@@ -731,12 +719,10 @@ const CATS=[
 
 /* ── UI helpers ───────────────────────────────── */
 function controls(...rows){
-  return '<div class="controls">'+rows.map(([lbl,min,max,id,val])=>`
-    <div class="sl-row">
-      <label>${lbl}</label>
-      <input type="range" min="${min}" max="${max}" value="${val}" step="1" data-id="${id}">
-      <span class="sl-val" data-out="${id}">${lbl.includes('vol')||lbl.includes('Impl')?val+'%':lbl.toLowerCase().includes('expiry')||lbl.toLowerCase().includes('month')?val+' mo':'$'+val}</span>
-    </div>`).join('')+'</div>';
+  return '<div class="controls">'+rows.map(([lbl,min,max,id,val])=>{
+    const display=id==='t1'||id==='t2'?val+' mo':'$'+val;
+    return `<div class="sl-row"><label>${lbl}</label><input type="range" min="${min}" max="${max}" value="${val}" step="1" data-id="${id}"><span class="sl-val" data-out="${id}">${display}</span></div>`;
+  }).join('')+'</div>';
 }
 function metricsHTML(bannerType='receive', bannerLbl='You collect today'){
   return `<div id="m-banner" class="cash-banner ${bannerType}">
@@ -768,7 +754,10 @@ function bind(el,fn){
   el.querySelectorAll('input[type=range]').forEach(inp=>{
     inp.addEventListener('input',()=>{
       const out=el.querySelector(`[data-out="${inp.dataset.id}"]`);
-      if(out){const v=inp.value;const id=inp.dataset.id;out.textContent=id==='v'||id.startsWith('v')?v+'%':id==='t'||id==='t1'||id==='t2'?v+' mo':'$'+v;}
+      if(out){
+        const v=inp.value,id=inp.dataset.id;
+        out.textContent=id==='t1'||id==='t2'?v+' mo':'$'+v;
+      }
       fn();
     });
   });
@@ -802,6 +791,7 @@ function show(id){
       <div class="callout">${s.insight}</div>
     </div>`;
   s.render(document.getElementById('widget'));
+  document.getElementById('main').scrollTop=0;
   window.scrollTo(0,0);
 }
 
@@ -815,8 +805,6 @@ function closeSidebar(){
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('overlay').classList.remove('show');
 }
-// Close sidebar when a strategy is selected on mobile
-const _origBuildNav = buildNav;
 
 buildNav();
 show('long_call');
